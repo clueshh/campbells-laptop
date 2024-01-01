@@ -34,3 +34,14 @@
       become: true
       tags: software_install
       loop: "{{ snap_install }}"
+
+- name: System update
+  hosts: localhost
+  tasks:
+    - name: Apt update all packages
+      ansible.builtin.apt:
+        update_cache: true
+        name: "*"
+        state: latest
+      become: true
+      tags: software_update_all

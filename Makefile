@@ -2,7 +2,7 @@ install-dev:
 	npm install -g prettier
 	pip install -r requirements.txt
 
-run:
+ansible-playbook:
 	ansible-playbook main.yaml -K
 
 lint:
