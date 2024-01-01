@@ -1,0 +1,36 @@
+---
+- name: Install local laptop requirements
+  hosts: localhost
+  tasks:
+    - name: Add apt keys
+      ansible.builtin.apt_key:
+        url: "{{ item.url }}"
+        keyring: "{{ item.keyring }}"
+        state: present
+      become: true
+      tags: apt_repo_key
+      loop: "{{ apt_keys }}"
+
+    - name: Add apt repos
+      ansible.builtin.apt_repository:
+        repo: "{{ item }}"
+        state: present
+      become: true
+      tags: apt_repo
+      loop: "{{ apt_repos }}"
+
+    - name: Apt install software
+      ansible.builtin.apt:
+        state: present
+        name: "{{ item }}"
+      become: true
+      tags: software_install
+      loop: "{{ apt_install }}"
+
+    - name: Snap install software
+      community.general.snap:
+        state: present
+        name: "{{ item }}"
+      become: true
+      tags: software_install
+      loop: "{{ snap_install }}"

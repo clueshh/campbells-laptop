@@ -1,0 +1,20 @@
+---
+apt_keys:
+  - url: "https://dl.google.com/linux/linux_signing_key.pub"
+    keyring: "/etc/apt/trusted.gpg.d/google-chrome.gpg"
+
+  - url: "https://apt.releases.hashicorp.com/gpg"
+    keyring: "/etc/apt/trusted.gpg.d/hashicorp.gpg"
+
+apt_repos:
+  - "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main"
+  - "deb [signed-by=/etc/apt/trusted.gpg.d/google-cloud-cli.gpg] https://packages.cloud.google.com/apt cloud-sdk main"
+  - "deb [signed-by=/etc/apt/trusted.gpg.d/hashicorp.gpg] https://apt.releases.hashicorp.com jammy main"
+  - "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/nodejs] https://deb.nodesource.com/node_16.x nodistro main"
+  - "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/trivy] https://aquasecurity.github.io/trivy-repo/deb jammy main"
+
+apt_install:
+
+snap_install:
+  - slack
+  - spotify
