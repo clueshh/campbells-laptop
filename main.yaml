@@ -52,6 +52,16 @@
       ansible.builtin.import_role:
         name: staticdev.pyenv
 
+    - name: Setup pyenv .zshrc
+      tags: pyenv
+      ansible.builtin.blockinfile:
+        path: "{{ pyenv_shellrc_file }}"
+        marker: "# {mark} ANSIBLE MANAGED BLOCK - pyenv"
+        prepend_newline: true
+        block: |
+          source {{ pyenv_path }}/.pyenvrc
+          source {{ pyenv_path }}/completions/pyenv.zsh
+
 - name: System update
   hosts: localhost
   tasks:
