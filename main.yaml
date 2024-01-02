@@ -71,4 +71,5 @@
         update_cache: true
         name: "*"
         state: latest
+        only_upgrade: true
       become: true

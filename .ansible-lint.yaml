@@ -1,0 +1,6 @@
+---
+exclude_paths:
+  - roles/stephdewit.nvm
+  - roles/staticdev.pyenv
+  - roles/diodonfrost.p10k
+  - collections/ansible_collections

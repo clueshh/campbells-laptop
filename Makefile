@@ -19,6 +19,8 @@ lint:
 		'*.y*ml' \
 		'**/*.y*ml'
 
+	ansible-lint -c .ansible-lint.yaml
+
 format:
 	prettier \
 		--ignore-path '.prettierignore' \
