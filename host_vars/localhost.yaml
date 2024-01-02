@@ -27,6 +27,9 @@ apt_keys:
   - url: https://pkgs.tailscale.com/stable/ubuntu/jammy.noarmor.gpg
     keyring: /etc/apt/trusted.gpg.d/tailscale.gpg
 
+  - url: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x9461999446FAF0DF770BFC9AE58A9D36647CAE7F
+    keyring: /etc/apt/trusted.gpg.d/papirus.gpg
+
 apt_repos:
   - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main
   - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/hashicorp.gpg] https://apt.releases.hashicorp.com jammy main
@@ -37,6 +40,7 @@ apt_repos:
   - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main
   - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/vscode.gpg] https://packages.microsoft.com/repos/code stable main
   - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/tailscale.gpg] https://pkgs.tailscale.com/stable/ubuntu jammy main
+  - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/papirus.gpg] http://ppa.launchpad.net/papirus/papirus/ubuntu jammy main
 
 apt_install:
   - terraform
@@ -52,6 +56,29 @@ apt_install:
   - helm
   - code
   - tailscale
+  - latte-dock
+  - kdeconnect
+  - papirus-icon-theme
+  - zsh
 
 snap_install:
   - slack
+  - filelight
+
+pyenv_version: v2.3.35
+pyenv_virtualenv_version: v1.2.2
+pyenv_update_version: "HEAD"
+pyenv_shellrc_file: "{{ ansible_env.HOME }}/.zshrc"
+pyenv_update_git_install: true
+pyenv_enable_autocompletion: true
+pyenv_enable_virtualenvs: true
+pyenv_python_versions:
+  - 3.11.4
+pyenv_global:
+  - 3.11.4
+
+nvm_version: 0.39.3
+nvm_node_version: lts
+nvm_install_path: ~/.nvm
+nvm_shell_init_file: ~/.zshrc
+nvm_install_deps: true

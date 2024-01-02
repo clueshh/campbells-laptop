@@ -1,0 +1,12 @@
+---
+collections:
+  - name: manala.roles
+    version: 3.7.0
+
+roles:
+  - name: diodonfrost.p10k
+    version: 1.4.0
+  - name: staticdev.pyenv
+    version: 2.10.2
+  - name: stephdewit.nvm
+    version: v3.4.0

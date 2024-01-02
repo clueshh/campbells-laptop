@@ -3,45 +3,62 @@
   hosts: localhost
   tasks:
     - name: Add apt keys
+      tags: apt_repo_key
       ansible.builtin.apt_key:
         url: "{{ item.url }}"
         keyring: "{{ item.keyring }}"
         state: present
       become: true
-      tags: apt_repo_key
       loop: "{{ apt_keys }}"
 
     - name: Add apt repos
+      tags: apt_repo
       ansible.builtin.apt_repository:
         repo: "{{ item }}"
         state: present
       become: true
-      tags: apt_repo
       loop: "{{ apt_repos }}"
 
     - name: Apt install software
+      tags: software_install
       ansible.builtin.apt:
         state: present
         name: "{{ item }}"
       become: true
-      tags: software_install
       loop: "{{ apt_install }}"
 
     - name: Snap install software
+      tags: software_install
       community.general.snap:
         state: present
         name: "{{ item }}"
       become: true
-      tags: software_install
       loop: "{{ snap_install }}"
+
+    - name: Install oh-my-zsh
+      tags: zsh
+      ansible.builtin.shell: |
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+      args:
+        creates: "{{ ansible_env.HOME }}/.oh-my-zsh"
+
+    - name: Install nvm
+      tags: nvm
+      ansible.builtin.import_role:
+        name: stephdewit.nvm
+
+    - name: Install pyenv
+      tags: pyenv
+      ansible.builtin.import_role:
+        name: staticdev.pyenv
 
 - name: System update
   hosts: localhost
   tasks:
     - name: Apt update all packages
+      tags: software_update_all
       ansible.builtin.apt:
         update_cache: true
         name: "*"
         state: latest
       become: true
-      tags: software_update_all
