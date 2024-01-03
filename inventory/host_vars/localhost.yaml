@@ -85,7 +85,7 @@ manala_ohmyzsh_users:
         - nvm
         - npm
         - pip
-        - pyenv
+        # - pyenv
         - sudo
         - ubuntu
         - web-search
