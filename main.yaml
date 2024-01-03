@@ -99,6 +99,13 @@
         - Consolasligaturizedv3-Italic.ttf
         - Consolasligaturizedv3.ttf
 
+    - name: Add Latte Dock config
+      tags: latte-dock
+      ansible.builtin.copy:
+        src: "files/latte-dock/Campbell.layout.latte"
+        dest: "{{ ansible_env.HOME }}/.config/latte/templates/Campbell.layout.latte"
+        mode: "0644"
+
 - name: System update
   hosts: localhost
   tasks:
