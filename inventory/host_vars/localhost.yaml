@@ -108,11 +108,8 @@ p10k_transient_prompt: "no" # Valid values: yes, no
 pyenv_version: v2.3.35
 pyenv_virtualenv_version: v1.2.2
 pyenv_update_version: "HEAD"
-pyenv_path: "{{ ansible_env.HOME }}/pyenv"
-pyenv_shellrc_file: "{{ ansible_env.HOME }}/.zshrc"
-pyenv_update_git_install: true
-pyenv_enable_autocompletion: false
-pyenv_enable_virtualenvs: true
+pyenv_path: ~/.pyenv
+pyenv_shellrc_file: ~/.zshrc
 pyenv_python_versions:
   - 3.11.4
 pyenv_global:
