@@ -1,8 +1,7 @@
 install-dev:
 	npm install -g prettier
 	pip install -r requirements.txt
-	ansible-galaxy collection install -r requirements.yml
-	ansible-galaxy role install -r requirements.yml
+	ansible-galaxy install -r requirements.yml
 
 ansible-playbook:
 	ansible-playbook main.yaml -K
@@ -10,7 +9,7 @@ ansible-playbook:
 ansible-playbook-%:
 	ansible-playbook main.yaml -K --tags $*
 
-lint:
+lint-prettier:
 	prettier \
 		--ignore-path '.prettierignore' \
 		--config '.prettierrc.yaml' \
@@ -19,7 +18,10 @@ lint:
 		'*.y*ml' \
 		'**/*.y*ml'
 
+lint-ansible:
 	ansible-lint -c .ansible-lint.yaml
+
+lint: lint-prettier lint-ansible
 
 format:
 	prettier \

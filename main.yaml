@@ -3,7 +3,7 @@
   hosts: localhost
   tasks:
     - name: Add apt keys
-      tags: apt_repo_key
+      tags: apt-repo-key
       ansible.builtin.apt_key:
         url: "{{ item.url }}"
         keyring: "{{ item.keyring }}"
@@ -12,7 +12,7 @@
       loop: "{{ apt_keys }}"
 
     - name: Add apt repos
-      tags: apt_repo
+      tags: apt-repo
       ansible.builtin.apt_repository:
         repo: "{{ item }}"
         state: present
@@ -20,7 +20,7 @@
       loop: "{{ apt_repos }}"
 
     - name: Apt install software
-      tags: software_install
+      tags: software-install
       ansible.builtin.apt:
         state: present
         name: "{{ item }}"
@@ -28,7 +28,7 @@
       loop: "{{ apt_install }}"
 
     - name: Snap install software
-      tags: software_install
+      tags: software-install
       community.general.snap:
         state: present
         name: "{{ item }}"
@@ -36,11 +36,16 @@
       loop: "{{ snap_install }}"
 
     - name: Install oh-my-zsh
-      tags: zsh
-      ansible.builtin.shell: |
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-      args:
-        creates: "{{ ansible_env.HOME }}/.oh-my-zsh"
+      tags: [zsh, ohmyzsh]
+      ansible.builtin.import_role:
+        name: manala.roles.ohmyzsh
+      become: true
+
+    - name: Install p10k
+      tags: [zsh, p10k]
+      ansible.builtin.import_role:
+        name: diodonfrost.p10k
+      become: true
 
     - name: Install nvm
       tags: nvm
@@ -52,21 +57,33 @@
       ansible.builtin.import_role:
         name: staticdev.pyenv
 
-    - name: Setup pyenv .zshrc
-      tags: pyenv
-      ansible.builtin.blockinfile:
-        path: "{{ pyenv_shellrc_file }}"
-        marker: "# {mark} ANSIBLE MANAGED BLOCK - pyenv"
-        prepend_newline: true
-        block: |
-          source {{ pyenv_path }}/.pyenvrc
-          source {{ pyenv_path }}/completions/pyenv.zsh
+    - name: Enable passwordless sudo for {{ ansible_user_id }}
+      tags: sudo
+      ansible.builtin.lineinfile:
+        path: /etc/sudoers.d/{{ ansible_user_id }}
+        line: "{{ ansible_user_id }} ALL=(ALL) NOPASSWD:ALL"
+        validate: "visudo -cf %s"
+        create: true
+        mode: "0440"
+      become: true
+
+    - name: Configure git
+      tags: git
+      community.general.git_config:
+        name: "{{ item.name }}"
+        value: "{{ item.value }}"
+        scope: global
+      loop:
+        - name: user.name
+          value: "{{ git_username }}"
+        - name: user.email
+          value: "{{ git_email }}"
 
 - name: System update
   hosts: localhost
   tasks:
     - name: Apt update all packages
-      tags: software_update_all
+      tags: software-update-all
       ansible.builtin.apt:
         update_cache: true
         name: "*"

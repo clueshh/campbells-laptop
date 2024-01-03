@@ -60,10 +60,50 @@ apt_install:
   - kdeconnect
   - papirus-icon-theme
   - zsh
+  - make
+  - openssh-server
 
 snap_install:
   - slack
   - filelight
+
+manala_ohmyzsh_dir: "{{ ansible_env.HOME }}/.oh-my-zsh"
+manala_ohmyzsh:
+  update: true
+manala_ohmyzsh_users:
+  - user: campbell
+    template: users/manala/.zshrc.j2
+    config:
+      plugins:
+        - git
+        - history
+        - history-substring-search
+        - command-not-found
+        - direnv
+        - helm
+        - kubectl
+        - nvm
+        - npm
+        - pip
+        - pyenv
+        - sudo
+        - ubuntu
+        - web-search
+      ZSH_THEME: "powerlevel10k/powerlevel10k"
+      DISABLE_AUTO_UPDATE: false
+
+# p10k things
+zsh_plugin: ohmyzsh
+p10k_prompt_style: "lean" # Valid values: lean, classic, rainbow, pure
+p10k_prompt_time: "12-hour" # Valid values: no, 24-hour, 12-hour
+p10k_prompt_separator: "angled" # Valid values: angled, vertical, slanted, round
+p10k_prompt_head: "sharp" # Valid values: sharp, blurred, slanted, round
+p10k_prompt_tails: flat # Valid values: flat, blurred, sharp, slanted, round
+p10k_prompt_height: one-line # Valid values: one-line, two-lines
+p10k_prompt_frame: "no" # Valid values: no, left, right, full
+p10k_prompt_spacing: compact # Valid values: compact, sparse
+p10k_prompt_flow: concise # Valid values: concise, fluent
+p10k_transient_prompt: "no" # Valid values: yes, no
 
 pyenv_version: v2.3.35
 pyenv_virtualenv_version: v1.2.2
@@ -83,3 +123,6 @@ nvm_node_version: lts
 nvm_install_path: ~/.nvm
 nvm_shell_init_file: ~/.zshrc
 nvm_install_deps: true
+
+git_username: "Campbell Whitworth"
+git_email: "campbell@whitworth.nz"
