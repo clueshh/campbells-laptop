@@ -84,7 +84,7 @@
       ansible.builtin.copy:
         src: "files/fonts/{{ item }}"
         dest: "{{ fonts_path | default('/usr/share/fonts/TTF') }}/{{ item }}"
-        mode: '0644'
+        mode: "0644"
       become: true
       loop:
         - Consolasligaturizedv3-Bold.ttf
