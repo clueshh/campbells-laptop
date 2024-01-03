@@ -47,6 +47,13 @@
         name: diodonfrost.p10k
       become: true
 
+    - name: Overwrite .p10k.zsh
+      tags: [zsh, p10k, p10k-zsh]
+      ansible.builtin.copy:
+        src: "files/.p10k.zsh"
+        dest: "{{ ansible_env.HOME }}/.p10k.zsh"
+        mode: "0644"
+
     - name: Install nvm
       tags: nvm
       ansible.builtin.import_role:
