@@ -106,6 +106,13 @@
         dest: "{{ ansible_env.HOME }}/.config/latte/templates/Campbell.layout.latte"
         mode: "0644"
 
+    - name: Add Konsole config
+      tags: konsole
+      ansible.builtin.copy:
+        src: "files/konsole/campbell.profile"
+        dest: "{{ ansible_env.HOME }}/.local/share/konsole/campbell.profile"
+        mode: "0644"
+
 - name: System update
   hosts: localhost
   tasks:
