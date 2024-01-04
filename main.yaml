@@ -52,6 +52,11 @@
       become: true
       loop: "{{ find.files }}"
 
+    - name: Install aws cli
+      tags: [software-install, awscli]
+      ansible.builtin.import_role:
+        name: deekayen.awscli2
+
     - name: Install oh-my-zsh
       tags: [zsh, ohmyzsh]
       ansible.builtin.import_role:

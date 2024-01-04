@@ -10,3 +10,5 @@ roles:
     version: 2.10.2
   - name: stephdewit.nvm
     version: v3.4.0
+  - name: deekayen.awscli2
+    version: 1.1.0
