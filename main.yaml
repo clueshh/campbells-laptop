@@ -20,7 +20,7 @@
       loop: "{{ apt_repos }}"
 
     - name: Apt install software
-      tags: software-install
+      tags: [software-install, apt]
       ansible.builtin.apt:
         state: present
         name: "{{ item }}"
@@ -28,12 +28,29 @@
       loop: "{{ apt_install }}"
 
     - name: Snap install software
-      tags: software-install
+      tags: [software-install, snap]
       community.general.snap:
         state: present
         name: "{{ item }}"
       become: true
       loop: "{{ snap_install }}"
+
+    - name: Find all .desktop files in snap installed apps
+      tags: [software-install, snap]
+      ansible.builtin.find:
+        recurse: false
+        paths: /var/lib/snapd/desktop/applications/
+        patterns: "*.desktop"
+      register: find
+
+    - name: Link snap installed apps to /usr/share/applications
+      tags: [software-install, snap]
+      ansible.builtin.file:
+        src: "{{ item.path }}"
+        path: "/usr/share/applications/{{ item.path | basename }}"
+        state: link
+      become: true
+      loop: "{{ find.files }}"
 
     - name: Install oh-my-zsh
       tags: [zsh, ohmyzsh]
