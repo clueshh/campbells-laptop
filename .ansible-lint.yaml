@@ -3,6 +3,7 @@ exclude_paths:
   - roles/stephdewit.nvm
   - roles/staticdev.pyenv
   - roles/diodonfrost.p10k
+  - roles/deekayen.awscli2
   - collections/ansible_collections
 
 enable_list:
