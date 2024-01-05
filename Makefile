@@ -4,10 +4,10 @@ install-dev:
 	ansible-galaxy install -r requirements.yml
 
 ansible-playbook:
-	ansible-playbook main.yaml -K
+	ansible-playbook playbooks/main.yaml -K
 
 ansible-playbook-%:
-	ansible-playbook main.yaml -K --tags $*
+	ansible-playbook playbooks/main.yaml -K --tags $*
 
 lint-prettier:
 	prettier \

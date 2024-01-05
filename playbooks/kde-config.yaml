@@ -1,0 +1,24 @@
+---
+- name: Install local laptop requirements
+  hosts: localhost
+  tasks:
+    - name: Update kdeglobals
+      community.general.kdeconfig:
+        path: "{{ item }}"
+        values:
+          - group: Icons
+            key: Theme
+            value: Papirus-Dark
+          - group: General
+            key: BrowserApplication
+            value: google-chrome.desktop
+      loop:
+        - "{{ ansible_env.HOME }}/.config/kdeglobals"
+        - "{{ ansible_env.HOME }}/.kde/share/config/kdeglobals"
+
+    - name: Update ~/.gtkrc-2.0 Icon Theme
+      ansible.builtin.lineinfile:
+        path: "{{ ansible_env.HOME }}/.gtkrc-2.0"
+        regexp: "^gtk-icon-theme-name="
+        line: 'gtk-icon-theme-name="Papirus-Dark"'
+        state: present

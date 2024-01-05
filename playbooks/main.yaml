@@ -1,6 +1,7 @@
 ---
 - name: Install local laptop requirements
   hosts: localhost
+  tags: [install]
   tasks:
     - name: Add apt keys
       tags: apt-repo-key
@@ -86,28 +87,6 @@
       ansible.builtin.import_role:
         name: staticdev.pyenv
 
-    - name: Enable passwordless sudo for {{ ansible_user_id }}
-      tags: sudo
-      ansible.builtin.lineinfile:
-        path: /etc/sudoers.d/{{ ansible_user_id }}
-        line: "{{ ansible_user_id }} ALL=(ALL) NOPASSWD:ALL"
-        validate: "visudo -cf %s"
-        create: true
-        mode: "0440"
-      become: true
-
-    - name: Configure git
-      tags: git
-      community.general.git_config:
-        name: "{{ item.name }}"
-        value: "{{ item.value }}"
-        scope: global
-      loop:
-        - name: user.name
-          value: "{{ git_username }}"
-        - name: user.email
-          value: "{{ git_email }}"
-
     - name: Install Consolas ligaturized fonts for vscode
       tags: fonts
       ansible.builtin.copy:
@@ -121,25 +100,18 @@
         - Consolasligaturizedv3-Italic.ttf
         - Consolasligaturizedv3.ttf
 
-    - name: Add Latte Dock config
-      tags: latte-dock
-      ansible.builtin.copy:
-        src: "files/latte-dock/Campbell.layout.latte"
-        dest: "{{ ansible_env.HOME }}/.config/latte/templates/Campbell.layout.latte"
-        mode: "0644"
-
-    - name: Add Konsole config
-      tags: konsole
-      ansible.builtin.copy:
-        src: "files/konsole/campbell.profile"
-        dest: "{{ ansible_env.HOME }}/.local/share/konsole/campbell.profile"
-        mode: "0644"
+- name: Configure general
+  tags: [configure, general-config]
+  ansible.builtin.import_playbook: general-config.yaml
+- name: Configure kde
+  tags: [configure, kde-config]
+  ansible.builtin.import_playbook: kde-config.yaml
 
 - name: System update
   hosts: localhost
+  tags: software-update-all
   tasks:
     - name: Apt update all packages
-      tags: software-update-all
       ansible.builtin.apt:
         update_cache: true
         name: "*"
