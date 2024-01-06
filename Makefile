@@ -40,5 +40,5 @@ konsave-save:
 konsave-export:
 	konsave \
 		--export-profile $(KONSAVE_PROFILE_NAME) \
+		--export-name $(KONSAVE_PROFILE_NAME) \
 		--export-directory ./konsave
-		--export-name $(KONSAVE_PROFILE_NAME)
