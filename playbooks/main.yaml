@@ -103,9 +103,6 @@
 - name: Configure general
   tags: [configure, general-config]
   ansible.builtin.import_playbook: general-config.yaml
-- name: Configure kde
-  tags: [configure, kde-config]
-  ansible.builtin.import_playbook: kde-config.yaml
 
 - name: System update
   hosts: localhost

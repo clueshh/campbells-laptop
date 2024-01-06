@@ -1,3 +1,5 @@
+KONSAVE_PROFILE_NAME ?= default
+
 install-dev:
 	npm install -g prettier
 	pip install -r requirements.txt
@@ -31,3 +33,12 @@ format:
 		--ignore-unknown \
 		--write '*.y*ml' \
 		'**/*.y*ml'
+
+konsave-save:
+	konsave --save $(KONSAVE_PROFILE_NAME)
+
+konsave-export:
+	konsave \
+		--export-profile $(KONSAVE_PROFILE_NAME) \
+		--export-directory ./konsave
+		--export-name $(KONSAVE_PROFILE_NAME)

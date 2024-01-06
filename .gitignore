@@ -180,8 +180,10 @@ pyrightconfig.json
 
 # Ansible
 
-collections/ansible_collections/
-roles/diodonfrost.p10k/
+collections/ansible_collections
+roles/diodonfrost.p10k
 roles/staticdev.pyenv
 roles/stephdewit.nvm
 roles/deekayen.awscli2
+konsave/*
+!konsave/.gitkeep
