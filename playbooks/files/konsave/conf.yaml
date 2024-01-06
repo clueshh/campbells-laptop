@@ -9,61 +9,61 @@
 # ${BEGINS_WITH="text"}: for folders with different names on different computers whose names start with the same thing.
 
 save:
-    configs:
-        location: "$CONFIG_DIR"
-        entries:
-            - gtk-2.0
-            - gtk-3.0
-            - gtk-4.0
-            - kate
-            - Kvantum
-            - latte
-            - dolphinrc
-            - katerc
-            - konsolerc
-            - kcminputrc
-            - kdeglobals
-            - kglobalshortcutsrc
-            - klipperrc
-            - krunnerrc
-            - kscreenlockerrc
-            - ksmserverrc
-            - kwinrc
-            - kwinrulesrc
-            - plasma-org.kde.plasma.desktop-appletsrc
-            - plasmarc
-            - plasmashellrc
-            - gtkrc
-            - gtkrc-2.0
-            - lattedockrc
-            - breezerc
-            - oxygenrc
-            - lightlyrc
-            - ksplashrc
-            - khotkeysrc
+  configs:
+    location: "$CONFIG_DIR"
+    entries:
+      - gtk-2.0
+      - gtk-3.0
+      - gtk-4.0
+      - kate
+      - Kvantum
+      - latte
+      - dolphinrc
+      - katerc
+      - konsolerc
+      - kcminputrc
+      - kdeglobals
+      - kglobalshortcutsrc
+      - klipperrc
+      - krunnerrc
+      - kscreenlockerrc
+      - ksmserverrc
+      - kwinrc
+      - kwinrulesrc
+      - plasma-org.kde.plasma.desktop-appletsrc
+      - plasmarc
+      - plasmashellrc
+      - gtkrc
+      - gtkrc-2.0
+      - lattedockrc
+      - breezerc
+      - oxygenrc
+      - lightlyrc
+      - ksplashrc
+      - khotkeysrc
 
-    app_layouts:
-        location: "$HOME/.local/share/kxmlgui5"
-        entries:
-            - dolphin
-            - konsole
+  app_layouts:
+    location: "$HOME/.local/share/kxmlgui5"
+    entries:
+      - dolphin
+      - konsole
 
 export:
-    share_folder:
-        location: "$SHARE_DIR"
-        entries:
-            - plasma
-            - kwin
-            - konsole
-            - fonts
-            - color-schemes
-            - aurorae
-            - icons
-            - wallpapers
+  share_folder:
+    location: "$SHARE_DIR"
+    entries:
+      - plasma
+      - kwin
+      - konsole
+      - fonts
+      - color-schemes
+      - aurorae
+      - icons
+      - wallpapers
 
-    home_folder:
-        location: "$HOME/"
-        entries:
-            - .fonts
-            - .themes
-            - .icons
+  home_folder:
+    location: "$HOME/"
+    entries:
+      - .fonts
+      - .themes
+      - .icons
