@@ -3,6 +3,10 @@
   hosts: localhost
   tags: [install]
   tasks:
+    - name: Always gather facts (incase run with tags)
+      ansible.builtin.setup:
+      tags: always
+
     - name: Add apt keys
       tags: apt-repo-key
       ansible.builtin.apt_key:
@@ -53,10 +57,18 @@
       become: true
       loop: "{{ find.files }}"
 
+    - name: Check if aws binary is in PATH
+      tags: [software-install, awscli]
+      ansible.builtin.command: which aws
+      changed_when: aws_path.rc != 0
+      register: aws_path
+      ignore_errors: true
+
     - name: Install aws cli
       tags: [software-install, awscli]
       ansible.builtin.import_role:
         name: deekayen.awscli2
+      when: aws_path.rc != 0
 
     - name: Install oh-my-zsh
       tags: [zsh, ohmyzsh]
