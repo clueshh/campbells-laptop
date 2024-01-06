@@ -20,4 +20,8 @@ make ansible-playbook-software-install
 # or to run it manually
 ansible-playbook -K main.yaml
 ansible-playbook -K main.yaml --tags software-install
+
+# backup using konsave
+make konsave-save
+make konsave-export
 ```
