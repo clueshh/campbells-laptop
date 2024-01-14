@@ -89,6 +89,7 @@ manala_ohmyzsh_users:
         - sudo
         - ubuntu
         - web-search
+        - aws
       ZSH_THEME: "powerlevel10k/powerlevel10k"
       DISABLE_AUTO_UPDATE: false
 
