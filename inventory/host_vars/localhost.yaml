@@ -90,6 +90,7 @@ manala_ohmyzsh_users:
         - ubuntu
         - web-search
         - aws
+        - docker
       ZSH_THEME: "powerlevel10k/powerlevel10k"
       DISABLE_AUTO_UPDATE: false
 
