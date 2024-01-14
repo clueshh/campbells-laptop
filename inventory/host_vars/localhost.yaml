@@ -76,6 +76,7 @@ manala_ohmyzsh_users:
     config:
       plugins:
         - git
+        - gitignore
         - history
         - history-substring-search
         - command-not-found
