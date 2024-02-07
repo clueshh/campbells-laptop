@@ -68,6 +68,7 @@ snap_install:
   - slack
   - filelight
   - yq
+  - dbeaver-ce
 
 manala_ohmyzsh_dir: "{{ ansible_env.HOME }}/.oh-my-zsh"
 manala_ohmyzsh:
