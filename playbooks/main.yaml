@@ -32,6 +32,13 @@
       become: true
       loop: "{{ apt_install }}"
 
+    - name: Apt install k9s
+      tags: [software-install, apt, k9s]
+      ansible.builtin.apt:
+        state: present
+        deb: "https://github.com/derailed/k9s/releases/download/{{ k9s_version }}/k9s_linux_amd64.deb"
+      become: true
+
     - name: Snap install software
       tags: [software-install, snap]
       community.general.snap:

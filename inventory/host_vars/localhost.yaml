@@ -119,3 +119,5 @@ nvm_install_deps: true
 
 git_username: "Campbell Whitworth"
 git_email: "campbell@whitworth.nz"
+
+k9s_version: v0.31.8
