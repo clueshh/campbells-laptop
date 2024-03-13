@@ -23,6 +23,17 @@
         state: present
       become: true
       loop: "{{ apt_repos }}"
+      when: item is string
+
+    - name: Add apt repos (with filename)
+      tags: apt-repo
+      ansible.builtin.apt_repository:
+        repo: "{{ item.repo }}"
+        filename: "{{ item.filename }}"
+        state: present
+      become: true
+      loop: "{{ apt_repos }}"
+      when: item is mapping
 
     - name: Apt install software
       tags: [software-install, apt]
