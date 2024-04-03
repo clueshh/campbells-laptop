@@ -42,3 +42,6 @@ konsave-export:
 		--export-profile $(KONSAVE_PROFILE_NAME) \
 		--export-name $(KONSAVE_PROFILE_NAME) \
 		--export-directory ./konsave
+
+konsave-import:
+	konsave --import-profile ./konsave/$(KONSAVE_PROFILE_NAME).knsv

@@ -34,6 +34,13 @@
         - name: user.email
           value: "{{ git_email }}"
 
+    - name: Make Konsave directory
+      tags: konsave
+      ansible.builtin.file:
+        path: "{{ ansible_env.HOME }}/.config/konsave"
+        state: directory
+        mode: "0755"
+
     - name: Configure Konsave
       tags: konsave
       ansible.builtin.copy:
