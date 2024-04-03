@@ -67,6 +67,9 @@ apt_install:
   - openssh-server
   - jq
   - notion-app
+  # required for pipelines
+  - php
+  - libapache2-mod-php
 
 snap_install:
   - slack
@@ -125,3 +128,5 @@ git_username: "Campbell Whitworth"
 git_email: "campbell@whitworth.nz"
 
 k9s_version: v0.32.1
+
+bb_pipelines_version: 0.0.70

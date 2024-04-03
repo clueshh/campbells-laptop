@@ -130,6 +130,14 @@
         - Consolasligaturizedv3-Italic.ttf
         - Consolasligaturizedv3.ttf
 
+    - name: Install Pipelines
+      tags: pipelines
+      ansible.builtin.get_url:
+        url: https://github.com/ktomk/pipelines/releases/download/{{ bb_pipelines_version }}/pipelines.phar
+        dest: /usr/local/bin/pipelines
+        mode: "0755"
+      become: true
+
 - name: Configure general
   tags: [configure, general-config]
   ansible.builtin.import_playbook: general-config.yaml
