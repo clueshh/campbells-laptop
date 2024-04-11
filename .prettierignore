@@ -1,5 +1,6 @@
 collections/ansible_collections
 roles/diodonfrost.p10k
+roles/gantsign.golang
 roles/staticdev.pyenv
 roles/stephdewit.nvm
 roles/deekayen.awscli2

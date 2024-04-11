@@ -117,6 +117,18 @@
       ansible.builtin.import_role:
         name: staticdev.pyenv
 
+    - name: Install golang
+      tags: golang
+      ansible.builtin.import_role:
+        name: gantsign.golang
+
+    - name: Add GOPATH to .zshenv
+      tags: golang
+      ansible.builtin.lineinfile:
+        path: "{{ ansible_env.HOME }}/.zshenv"
+        line: "path+=('{{ ansible_local.golang.general.home }}/bin' '~/go/bin')"
+        create: yes
+
     - name: Install Consolas ligaturized fonts for vscode
       tags: fonts
       ansible.builtin.copy:

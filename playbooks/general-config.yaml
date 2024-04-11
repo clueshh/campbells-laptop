@@ -2,6 +2,13 @@
 - name: General configuration
   hosts: localhost
   tasks:
+    - name: Add ~/local/bin to path
+      tags: user
+      ansible.builtin.lineinfile:
+        path: "{{ ansible_env.HOME }}/.zshenv"
+        line: "path+=('~/local/bin')"
+        create: yes
+
     - name: Configure docker and ssh key for {{ ansible_user_id }}
       tags: user
       ansible.builtin.user:
