@@ -2,7 +2,7 @@
 - name: General configuration
   hosts: localhost
   tasks:
-    - name: Add ~/local/bin to path
+    - name: Add ~/local/bin to .zshenv
       tags: user
       ansible.builtin.lineinfile:
         path: "{{ ansible_env.HOME }}/.zshenv"
@@ -28,6 +28,19 @@
         create: true
         mode: "0440"
       become: true
+
+    - name: Add GOPATH to .zshenv
+      tags: golang
+      ansible.builtin.lineinfile:
+        path: "{{ ansible_env.HOME }}/.zshenv"
+        line: "path+=('{{ ansible_local.golang.general.home }}/bin' '~/go/bin')"
+        create: yes
+
+    - name: Add k9s completions to .zshrc
+      tags: k9s
+      ansible.builtin.lineinfile:
+        path: "{{ ansible_env.HOME }}/.zshrc"
+        line: "source <(k9s completion zsh)"
 
     - name: Configure git
       tags: git
