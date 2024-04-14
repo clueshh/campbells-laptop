@@ -68,6 +68,7 @@ apt_install:
   - jq
   - notion-app
   - sshuttle
+  - ffmpeg
   # required for pipelines
   - php
   - libapache2-mod-php
