@@ -69,6 +69,7 @@ apt_install:
   - notion-app
   - sshuttle
   - ffmpeg
+  - kwin-bismuth
   # required for pipelines
   - php
   - libapache2-mod-php
