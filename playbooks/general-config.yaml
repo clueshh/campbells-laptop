@@ -106,4 +106,4 @@
           }
 
           add-zsh-hook chpwd load-nvmrc
-          load-nvmrc
+          load-nvmrc > /dev/null
