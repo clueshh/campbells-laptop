@@ -42,6 +42,12 @@
         path: "{{ ansible_env.HOME }}/.zshrc"
         line: "source <(k9s completion zsh)"
 
+    - name: Add dive to .zshrc
+      tags: dive
+      ansible.builtin.lineinfile:
+        path: "{{ ansible_env.HOME }}/.zshrc"
+        line: alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock wagoodman/dive"
+
     - name: Configure git
       tags: git
       community.general.git_config:
@@ -67,3 +73,37 @@
         src: "files/konsave/conf.yaml"
         dest: "{{ ansible_env.HOME }}/.config/konsave/conf.yaml"
         mode: "0644"
+
+    - name: Autoload .nvmrc
+      tags: nvm
+      ansible.builtin.blockinfile:
+        path: "{{ ansible_env.HOME }}/.zshrc"
+        marker_begin: "BEGIN auto load .nvmrc"
+        marker_end: "END auto load .nvmrc"
+        prepend_newline: true
+        append_newline: true
+        block: |
+          # https://github.com/nvm-sh/nvm?tab=readme-ov-file#zsh
+          autoload -U add-zsh-hook
+
+          load-nvmrc() {
+            local nvmrc_path
+            nvmrc_path="$(nvm_find_nvmrc)"
+
+            if [ -n "$nvmrc_path" ]; then
+              local nvmrc_node_version
+              nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+              if [ "$nvmrc_node_version" = "N/A" ]; then
+                nvm install
+              elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+                nvm use
+              fi
+            elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
+              echo "Reverting to nvm default version"
+              nvm use default
+            fi
+          }
+
+          add-zsh-hook chpwd load-nvmrc
+          load-nvmrc
