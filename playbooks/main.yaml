@@ -50,13 +50,6 @@
         deb: "https://github.com/derailed/k9s/releases/download/{{ k9s_version }}/k9s_linux_amd64.deb"
       become: true
 
-    - name: Apt install Insomnia
-      tags: [software-install, apt, insomnia]
-      ansible.builtin.apt:
-        state: present
-        deb: "https://github.com/Kong/insomnia/releases/download/core@{{ insomnia_version }}/Insomnia.Core-{{ insomnia_version }}.deb"
-      become: true
-
     - name: Snap install software
       tags: [software-install, snap]
       community.general.snap:
