@@ -107,6 +107,8 @@ manala_ohmyzsh_users:
         - web-search
         - aws
         - docker
+        - lxd
+        - juju
       ZSH_THEME: "powerlevel10k/powerlevel10k"
       DISABLE_AUTO_UPDATE: false
 
