@@ -7,7 +7,8 @@
       ansible.builtin.lineinfile:
         path: "{{ ansible_env.HOME }}/.zshenv"
         line: "path+=('{{ ansible_env.HOME }}/local/bin')"
-        create: yes
+        create: true
+        mode: "0644"
 
     - name: Configure docker and ssh key for {{ ansible_user_id }}
       tags: user
@@ -34,7 +35,8 @@
       ansible.builtin.lineinfile:
         path: "{{ ansible_env.HOME }}/.zshenv"
         line: "path+=('{{ ansible_local.golang.general.home }}/bin' '{{ ansible_env.HOME }}/go/bin')"
-        create: yes
+        create: true
+        mode: "0644"
 
     - name: Add k9s completions to .zshrc
       tags: k9s
