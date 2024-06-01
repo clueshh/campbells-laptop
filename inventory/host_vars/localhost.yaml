@@ -71,7 +71,7 @@ apt_install:
   - ffmpeg
   - kwin-bismuth
   - kamoso
-  - simple-screen-recorder
+  - simplescreenrecorder
   # required for pipelines
   - php
   - libapache2-mod-php
