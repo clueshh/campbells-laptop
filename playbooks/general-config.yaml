@@ -2,11 +2,11 @@
 - name: General configuration
   hosts: localhost
   tasks:
-    - name: Add ~/local/bin to .zshenv
+    - name: Add ~/.local/bin to .zshenv
       tags: user
       ansible.builtin.lineinfile:
         path: "{{ ansible_env.HOME }}/.zshenv"
-        line: "path+=('{{ ansible_env.HOME }}/local/bin')"
+        line: "path+=('{{ ansible_env.HOME }}/.local/bin')"
         create: true
         mode: "0644"
 
