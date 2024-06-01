@@ -70,10 +70,11 @@ apt_install:
   - sshuttle
   - ffmpeg
   - kwin-bismuth
+  - kamoso
+  - simple-screen-recorder
   # required for pipelines
   - php
   - libapache2-mod-php
-  - simple-screen-recorder
 
 snap_install:
   - slack
