@@ -2,6 +2,20 @@
 - name: General configuration
   hosts: localhost
   tasks:
+    - name: Ensure ~/.local/bin exists
+      tags: user
+      ansible.builtin.file:
+        path: "{{ ansible_env.HOME }}/.local/bin"
+        state: directory
+        mode: "0755"
+
+    - name: Symlink batcat to bat
+      tags: user
+      ansible.builtin.file:
+        src: /usr/bin/batcat
+        dest: "{{ ansible_env.HOME }}/.local/bin/bat"
+        state: link
+
     - name: Add ~/.local/bin to .zshenv
       tags: user
       ansible.builtin.lineinfile:
@@ -49,6 +63,14 @@
       ansible.builtin.lineinfile:
         path: "{{ ansible_env.HOME }}/.zshrc"
         line: alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock wagoodman/dive"
+
+    - name: Download juju completions
+      tags: juju
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/juju/juju/main/etc/bash_completion.d/juju
+        dest: "/usr/share/bash-completion/completions/juju"
+        mode: "0644"
+      become: true
 
     - name: Configure git
       tags: git

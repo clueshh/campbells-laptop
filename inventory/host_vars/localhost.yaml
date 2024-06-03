@@ -72,6 +72,8 @@ apt_install:
   - kwin-bismuth
   - kamoso
   - simplescreenrecorder
+  - imagemagick
+  - bat
   # required for pipelines
   - php
   - libapache2-mod-php
