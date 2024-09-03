@@ -1,5 +1,12 @@
 KONSAVE_PROFILE_NAME ?= default
 
+bootstrap:
+	ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N ""
+	apt install python3-pip
+	add-apt-repository --yes --update ppa:ansible/ansible
+	apt install ansible
+	ansible-galaxy install -r requirements.yml
+
 install-dev:
 	npm install -g prettier
 	pip install -r requirements.txt
