@@ -66,7 +66,6 @@ apt_install:
   - make
   - openssh-server
   - jq
-  - notion-app
   - sshuttle
   - ffmpeg
   - kwin-bismuth
@@ -74,9 +73,6 @@ apt_install:
   - simplescreenrecorder
   - imagemagick
   - bat
-  # required for pipelines
-  - php
-  - libapache2-mod-php
 
 snap_install:
   - slack
@@ -135,5 +131,3 @@ git_username: "Campbell Whitworth"
 git_email: "campbell.whitworth@fingermarkglobal.com"
 
 k9s_version: v0.32.1
-
-bb_pipelines_version: 0.0.70
