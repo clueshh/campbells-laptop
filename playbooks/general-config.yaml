@@ -64,14 +64,6 @@
         path: "{{ ansible_env.HOME }}/.zshrc"
         line: alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock wagoodman/dive"
 
-    - name: Download juju completions
-      tags: juju
-      ansible.builtin.get_url:
-        url: https://raw.githubusercontent.com/juju/juju/main/etc/bash_completion.d/juju
-        dest: "/usr/share/bash-completion/completions/juju"
-        mode: "0644"
-      become: true
-
     - name: Configure git
       tags: git
       community.general.git_config:
