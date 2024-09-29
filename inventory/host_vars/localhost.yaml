@@ -44,7 +44,6 @@ apt_repos:
     repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/vscode.gpg] https://packages.microsoft.com/repos/code stable main
   - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/tailscale.gpg] https://pkgs.tailscale.com/stable/ubuntu jammy main
   - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/papirus.gpg] http://ppa.launchpad.net/papirus/papirus/ubuntu jammy main
-  - deb [trusted=yes] https://apt.fury.io/notion-repackaged/ /
 
 apt_install:
   - terraform
@@ -79,6 +78,7 @@ snap_install:
   - slack
   - filelight
   - yq
+  - dbeaver-ce
   - obsidian
 
 snap_classic:
