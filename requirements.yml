@@ -2,6 +2,8 @@
 collections:
   - name: manala.roles
     version: 3.7.0
+  - name: community.general
+    version: 9.4.0
 
 roles:
   - name: diodonfrost.p10k

@@ -1,0 +1,5 @@
+---
+- name: Start the espanso service
+  ansible.builtin.command: espanso service start
+  register: start_service
+  changed_when: start_service.rc != 0

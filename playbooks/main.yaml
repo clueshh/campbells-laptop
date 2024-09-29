@@ -50,11 +50,17 @@
         deb: "https://github.com/derailed/k9s/releases/download/{{ k9s_version }}/k9s_linux_amd64.deb"
       become: true
 
+    - name: Install Espanso
+      tags: [software-install, espanso]
+      ansible.builtin.import_role:
+        name: espanso
+
     - name: Snap install software
       tags: [software-install, snap]
       community.general.snap:
         state: present
         name: "{{ item }}"
+        classic: "{{ item in snap_classic }}"
       become: true
       loop: "{{ snap_install }}"
 

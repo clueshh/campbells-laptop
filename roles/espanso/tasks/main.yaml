@@ -1,0 +1,44 @@
+---
+- name: Create the $HOME/opt destination folder
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/opt"
+    state: directory
+    mode: "0755"
+
+- name: Download the AppImage
+  ansible.builtin.get_url:
+    url: "https://github.com/espanso/espanso/releases/download/{{ espanso_version }}/Espanso-X11.AppImage"
+    dest: "{{ ansible_env.HOME }}/opt/Espanso.AppImage"
+    mode: "0755"
+
+- name: Make the AppImage executable
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/opt/Espanso.AppImage"
+    mode: "0755"
+
+- name: Check if espanso is already in the path
+  ansible.builtin.command: espanso status
+  register: espanso_status
+  failed_when: false
+  changed_when: espanso_status.rc != 0
+
+- name: Register the espanso command alias
+  ansible.builtin.command: "{{ ansible_env.HOME }}/opt/Espanso.AppImage env-path register"
+  when: espanso_status.rc != 0
+  become: true
+  register: register_espanso
+  changed_when: register_espanso.rc != 0
+
+- name: Check if espanso service is registered
+  ansible.builtin.command: espanso service status
+  register: espanso_service_status
+  failed_when: false
+  changed_when: espanso_service_status.rc != 0
+
+- name: Register espanso as a systemd service
+  ansible.builtin.command: espanso service register
+  when: espanso_service_status.rc != 0
+  register: register_service
+  changed_when: register_service.rc != 0
+  notify:
+    - Start the espanso service
