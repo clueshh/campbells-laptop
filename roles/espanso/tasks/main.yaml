@@ -17,7 +17,7 @@
     mode: "0755"
 
 - name: Check if espanso is already in the path
-  ansible.builtin.command: espanso status
+  ansible.builtin.command: espanso --help
   register: espanso_status
   failed_when: false
   changed_when: espanso_status.rc != 0
