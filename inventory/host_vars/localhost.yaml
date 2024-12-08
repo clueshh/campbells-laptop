@@ -73,6 +73,7 @@ apt_install:
   - simplescreenrecorder
   - imagemagick
   - bat
+  - asciinema
 
 snap_install:
   - slack
@@ -80,6 +81,7 @@ snap_install:
   - yq
   - dbeaver-ce
   - obsidian
+  - asciinema-agg
 
 snap_classic:
   - obsidian
