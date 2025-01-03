@@ -6,7 +6,7 @@ apt_keys:
   - url: https://apt.releases.hashicorp.com/gpg
     keyring: /etc/apt/trusted.gpg.d/hashicorp.gpg
 
-  - url: https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg
+  - url: https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg
     keyring: /etc/apt/trusted.gpg.d/spotify.gpg
 
   - url: https://download.docker.com/linux/ubuntu/gpg
