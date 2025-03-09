@@ -82,6 +82,7 @@ snap_install:
   - dbeaver-ce
   - obsidian
   - asciinema-agg
+  - kdenlive
 
 snap_classic:
   - obsidian
