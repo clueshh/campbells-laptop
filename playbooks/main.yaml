@@ -113,6 +113,15 @@
         dest: "{{ ansible_env.HOME }}/.p10k.zsh"
         mode: "0644"
 
+    - name: Install zsh plugins
+      tags: [zsh, zsh-plugins]
+      ansible.builtin.git:
+        repo: "{{ item.repo }}"
+        dest: "{{ item.dest }}"
+        version: "{{ item.version | default('HEAD') }}"
+      become: true
+      loop: "{{ zsh_plugins }}"
+
     - name: Install nvm
       tags: nvm
       ansible.builtin.import_role:

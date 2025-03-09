@@ -30,6 +30,12 @@ apt_keys:
   - url: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x9461999446FAF0DF770BFC9AE58A9D36647CAE7F
     keyring: /etc/apt/trusted.gpg.d/papirus.gpg
 
+  - url: https://aquasecurity.github.io/trivy-repo/deb/public.key
+    keyring: /etc/apt/trusted.gpg.d/trivy.gpg
+
+  - url: https://raw.githubusercontent.com/eza-community/eza/main/deb.asc
+    keyring: /etc/apt/trusted.gpg.d/gierens.gpg
+
 apt_repos:
   - filename: google-chrome
     repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main
@@ -44,6 +50,8 @@ apt_repos:
     repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/vscode.gpg] https://packages.microsoft.com/repos/code stable main
   - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/tailscale.gpg] https://pkgs.tailscale.com/stable/ubuntu jammy main
   - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/papirus.gpg] http://ppa.launchpad.net/papirus/papirus/ubuntu jammy main
+  - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main
+  - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/gierens.gpg] http://deb.gierens.de stable main
 
 apt_install:
   - terraform
@@ -74,6 +82,10 @@ apt_install:
   - imagemagick
   - bat
   - asciinema
+  - trivy
+  - direnv
+  - fzf
+  - eza
 
 snap_install:
   - slack
@@ -112,11 +124,20 @@ manala_ohmyzsh_users:
         - web-search
         - aws
         - docker
+        - fzf-tab
+        - k9s
+        - terraform
       ZSH_THEME: "powerlevel10k/powerlevel10k"
       DISABLE_AUTO_UPDATE: false
 
 # p10k things
 zsh_plugin: ohmyzsh
+
+# custom plugins
+zsh_plugins:
+  - repo: https://github.com/Aloxaf/fzf-tab
+    dest: "{{ manala_ohmyzsh_dir }}/custom/plugins/fzf-tab"
+    version: v1.2.0
 
 pyenv_version: v2.3.35
 pyenv_virtualenv_version: v1.2.2
@@ -137,6 +158,6 @@ nvm_install_deps: true
 git_username: "Campbell Whitworth"
 git_email: "campbell.whitworth@fingermarkglobal.com"
 
-k9s_version: v0.32.1
+k9s_version: v0.40.5
 
 espanso_version: v2.2.1

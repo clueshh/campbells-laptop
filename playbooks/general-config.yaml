@@ -52,12 +52,6 @@
         create: true
         mode: "0644"
 
-    - name: Add k9s completions to .zshrc
-      tags: k9s
-      ansible.builtin.lineinfile:
-        path: "{{ ansible_env.HOME }}/.zshrc"
-        line: "source <(k9s completion zsh)"
-
     - name: Add dive to .zshrc
       tags: dive
       ansible.builtin.lineinfile:
@@ -123,3 +117,57 @@
 
           add-zsh-hook chpwd load-nvmrc
           load-nvmrc > /dev/null
+
+    - name: Other .zshrc things
+      tags: zsh
+      ansible.builtin.blockinfile:
+        path: "{{ ansible_env.HOME }}/.zshrc"
+        marker_begin: "BEGIN other .zshrc things"
+        marker_end: "END other .zshrc things"
+        prepend_newline: true
+        append_newline: true
+        block: |
+          # Enable Emacs keybindings
+          bindkey -e
+
+          # ---- HISTORY ----
+          HISTDUP=erase
+          setopt append_history
+          setopt sharehistory
+          setopt hist_ignore_space
+          setopt hist_ignore_all_dups
+          setopt hist_save_no_dups
+          setopt hist_ignore_dups
+          setopt hist_find_no_dups
+
+          # ---- BAT ----
+
+          export BAT_THEME="DarkNeon"
+          export BAT_STYLE="numbers,changes,header"
+          alias cat="bat"
+
+          # ---- ALIASES ----
+
+          # Colorize help output
+          alias -g -- -h='-h 2>&1 | bat --language=help --style=plain'
+          alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
+
+          # ---- FZF ----
+
+          export FZF_DEFAULT_OPTS="
+            --color=fg:#c9d1d9,hl:#58a6ff
+            --color=fg+:#f0f6fc,hl+:#1f6feb
+            --color=info:#8b949e,prompt:#58a6ff,pointer:#58a6ff
+            --color=marker:#d29922,spinner:#58a6ff,header:#8b949e
+          "
+
+          # set fzf-tab to use fzf default options
+          zstyle ':fzf-tab:*' fzf-flags $(echo $FZF_DEFAULT_OPTS)
+          # set list-colors to enable filename colorizing
+          zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+          # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+          zstyle ':completion:*' menu no
+          # preview directory's content with eza when completing cd
+          zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+          # preview file with bat when completing file
+          zstyle ':fzf-tab:complete:bat:*' fzf-preview '[[ -d "$realpath" ]] && ls --color "$realpath" || bat --style=numbers --color=always "$realpath"'
