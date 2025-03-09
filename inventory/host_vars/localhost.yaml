@@ -124,6 +124,8 @@ manala_ohmyzsh_users:
         - aws
         - docker
         - fzf-tab
+        - k9s
+        - terraform
       ZSH_THEME: "powerlevel10k/powerlevel10k"
       DISABLE_AUTO_UPDATE: false
 
