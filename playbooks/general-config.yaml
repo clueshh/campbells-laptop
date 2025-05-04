@@ -131,6 +131,7 @@
           bindkey -e
 
           # ---- HISTORY ----
+
           HISTDUP=erase
           setopt append_history
           setopt sharehistory
@@ -171,3 +172,11 @@
           zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
           # preview file with bat when completing file
           zstyle ':fzf-tab:complete:bat:*' fzf-preview '[[ -d "$realpath" ]] && ls --color "$realpath" || bat --style=numbers --color=always "$realpath"'
+
+          # ---- AWS ----
+
+          export AWS_PAGER="bat --language=json --style=numbers"
+
+          # ---- FM ----
+
+          source <(fm completions)
