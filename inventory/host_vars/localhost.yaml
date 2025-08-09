@@ -127,7 +127,6 @@ manala_ohmyzsh_users:
         - fzf-tab
         - k9s
         - terraform
-      ZSH_THEME: "powerlevel10k/powerlevel10k"
       DISABLE_AUTO_UPDATE: false
 
 # p10k things
@@ -146,8 +145,10 @@ pyenv_path: "{{ ansible_env.HOME }}/.pyenv"
 pyenv_shellrc_file: ~/.zshrc
 pyenv_python_versions:
   - 3.11.4
+  - 3.12.10
+  - 3.13.3
 pyenv_global:
-  - 3.11.4
+  - 3.13.3
 
 nvm_version: 0.39.3
 nvm_node_version: lts
@@ -158,6 +159,4 @@ nvm_install_deps: true
 git_username: "Campbell Whitworth"
 git_email: "campbell.whitworth@fingermarkglobal.com"
 
-k9s_version: v0.40.5
-
-espanso_version: v2.2.1
+k9s_version: v0.50.9

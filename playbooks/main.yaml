@@ -50,11 +50,6 @@
         deb: "https://github.com/derailed/k9s/releases/download/{{ k9s_version }}/k9s_linux_amd64.deb"
       become: true
 
-    - name: Install Espanso
-      tags: [software-install, espanso]
-      ansible.builtin.import_role:
-        name: espanso
-
     - name: Snap install software
       tags: [software-install, snap]
       community.general.snap:
@@ -100,19 +95,6 @@
         name: manala.roles.ohmyzsh
       become: true
 
-    - name: Install p10k
-      tags: [zsh, p10k]
-      ansible.builtin.import_role:
-        name: diodonfrost.p10k
-      become: true
-
-    - name: Overwrite .p10k.zsh
-      tags: [zsh, p10k, p10k-zsh]
-      ansible.builtin.copy:
-        src: "files/p10k/.p10k.zsh"
-        dest: "{{ ansible_env.HOME }}/.p10k.zsh"
-        mode: "0644"
-
     - name: Install zsh plugins
       tags: [zsh, zsh-plugins]
       ansible.builtin.git:
@@ -121,6 +103,12 @@
         version: "{{ item.version | default('HEAD') }}"
       become: true
       loop: "{{ zsh_plugins }}"
+
+    - name: Install starship
+      tags: [zsh, starship]
+      ansible.builtin.import_role:
+        name: rolehippie.starship
+      become: true
 
     - name: Install nvm
       tags: nvm
@@ -149,6 +137,14 @@
         - Consolasligaturizedv3-BoldItalic.ttf
         - Consolasligaturizedv3-Italic.ttf
         - Consolasligaturizedv3.ttf
+
+    - name: Download and extract FiraCode Nerd Font
+      tags: fonts
+      ansible.builtin.unarchive:
+        src: "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/FiraCode.zip"
+        dest: "{{ fonts_path | default('/usr/share/fonts/TTF') }}"
+        remote_src: true
+      become: true
 
 - name: Configure general
   tags: [configure, general-config]
