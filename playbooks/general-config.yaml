@@ -167,10 +167,13 @@
           # ---- FZF ----
 
           export FZF_DEFAULT_OPTS="
-            --color=fg:#c9d1d9,hl:#58a6ff
-            --color=fg+:#f0f6fc,hl+:#1f6feb
-            --color=info:#8b949e,prompt:#58a6ff,pointer:#58a6ff
-            --color=marker:#d29922,spinner:#58a6ff,header:#8b949e
+            --height 20%
+            --layout=reverse
+            --border
+            --color=fg:#cdd6f4,bg:-1,hl:#f38ba8 \
+            --color=fg+:#f5e0dc,bg+:-1,hl+:#f38ba8 \
+            --color=info:#89b4fa,prompt:#fab387,pointer:#f38ba8,marker:#a6e3a1 \
+            --color=spinner:#89b4fa,header:#89b4fa
           "
 
           # set fzf-tab to use fzf default options
