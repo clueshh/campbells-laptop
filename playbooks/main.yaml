@@ -104,6 +104,17 @@
       become: true
       loop: "{{ zsh_plugins }}"
 
+    - name: Install Atuin
+      tags: [zsh, atuin]
+      ansible.builtin.unarchive:
+        src: https://github.com/atuinsh/atuin/releases/download/{{ atuin_version }}/atuin-x86_64-unknown-linux-gnu.tar.gz
+        dest: /usr/local/bin
+        remote_src: true
+        mode: "0755"
+        include: [atuin-x86_64-unknown-linux-gnu/atuin]
+        extra_opts: ["--strip-components=1", "--show-stored-names"]
+      become: true
+
     - name: Install starship
       tags: [zsh, starship]
       ansible.builtin.import_role:

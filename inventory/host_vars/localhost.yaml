@@ -160,3 +160,5 @@ git_username: "Campbell Whitworth"
 git_email: "campbell.whitworth@fingermarkglobal.com"
 
 k9s_version: v0.50.9
+
+atuin_version: v18.8.0

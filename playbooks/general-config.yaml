@@ -95,6 +95,13 @@
         dest: "{{ ansible_env.HOME }}/.config/starship.toml"
         mode: "0644"
 
+    - name: Configure Atuin
+      tags: atuin
+      ansible.builtin.copy:
+        src: "files/atuin/config.toml"
+        dest: "{{ ansible_env.HOME }}/.config/atuin/config.toml"
+        mode: "0644"
+
     - name: Autoload .nvmrc
       tags: nvm
       ansible.builtin.blockinfile:
@@ -198,3 +205,7 @@
           # ---- Starship ----
           eval "$(starship init zsh)"
           source <(starship completions zsh)
+
+          # ---- Atuin ----
+          eval "$(atuin init zsh --disable-up-arrow)"
+          source <(atuin gen-completions --shell zsh)
