@@ -138,9 +138,10 @@ zsh_plugins:
     dest: "{{ manala_ohmyzsh_dir }}/custom/plugins/fzf-tab"
     version: v1.2.0
 
-pyenv_version: v2.3.35
-pyenv_virtualenv_version: v1.2.2
-pyenv_update_version: "HEAD"
+pyenv_version: HEAD
+pyenv_virtualenv_version: HEAD
+pyenv_update_version: HEAD
+pyenv_update: true
 pyenv_path: "{{ ansible_env.HOME }}/.pyenv"
 pyenv_shellrc_file: ~/.zshrc
 pyenv_python_versions:

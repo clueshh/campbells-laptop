@@ -32,6 +32,7 @@
         append: true
         generate_ssh_key: true
         ssh_key_comment: "{{ ansible_user_id }}@{{ ansible_hostname }}"
+        force: false
       become: true
 
     - name: Enable passwordless sudo for {{ ansible_user_id }}
@@ -94,6 +95,13 @@
         src: "files/starship/starship.toml"
         dest: "{{ ansible_env.HOME }}/.config/starship.toml"
         mode: "0644"
+
+    - name: Make Atuin directory
+      tags: atuin
+      ansible.builtin.file:
+        path: "{{ ansible_env.HOME }}/.config/atuin"
+        state: directory
+        mode: "0755"
 
     - name: Configure Atuin
       tags: atuin
