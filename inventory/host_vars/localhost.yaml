@@ -36,6 +36,9 @@ apt_keys:
   - url: https://raw.githubusercontent.com/eza-community/eza/main/deb.asc
     keyring: /etc/apt/trusted.gpg.d/gierens.gpg
 
+  - url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+    keyring: /usr/share/keyrings/virtualbox.gpg
+
 apt_repos:
   - filename: google-chrome
     repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main
@@ -52,6 +55,7 @@ apt_repos:
   - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/papirus.gpg] http://ppa.launchpad.net/papirus/papirus/ubuntu jammy main
   - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main
   - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/gierens.gpg] http://deb.gierens.de stable main
+  - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/virtualbox.gpg] https://download.virtualbox.org/virtualbox/debian jammy contrib
 
 apt_install:
   - terraform
