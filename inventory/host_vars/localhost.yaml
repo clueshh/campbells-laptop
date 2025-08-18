@@ -37,25 +37,25 @@ apt_keys:
     keyring: /etc/apt/trusted.gpg.d/gierens.gpg
 
   - url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
-    keyring: /usr/share/keyrings/virtualbox.gpg
+    keyring: /etc/apt/trusted.gpg.d/virtualbox.gpg
 
 apt_repos:
   - filename: google-chrome
     repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main
-  - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/hashicorp.gpg] https://apt.releases.hashicorp.com jammy main
+  - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/hashicorp.gpg] https://apt.releases.hashicorp.com noble main
   - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/spotify.gpg] https://repository.spotify.com stable non-free
-  - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/docker.gpg] https://download.docker.com/linux/ubuntu jammy stable
+  - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/docker.gpg] https://download.docker.com/linux/ubuntu noble stable
   - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/kubernetes.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /
   - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main
   - filename: 1password
     repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/1password.gpg] https://downloads.1password.com/linux/debian/amd64 stable main
   - filename: vscode
     repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/vscode.gpg] https://packages.microsoft.com/repos/code stable main
-  - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/tailscale.gpg] https://pkgs.tailscale.com/stable/ubuntu jammy main
-  - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/papirus.gpg] http://ppa.launchpad.net/papirus/papirus/ubuntu jammy main
+  - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/tailscale.gpg] https://pkgs.tailscale.com/stable/ubuntu noble main
+  - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/papirus.gpg] http://ppa.launchpad.net/papirus/papirus/ubuntu noble main
   - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main
   - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/gierens.gpg] http://deb.gierens.de stable main
-  - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/virtualbox.gpg] https://download.virtualbox.org/virtualbox/debian jammy contrib
+  - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/virtualbox.gpg] https://download.virtualbox.org/virtualbox/debian noble contrib
 
 apt_install:
   - terraform
@@ -90,6 +90,7 @@ apt_install:
   - direnv
   - fzf
   - eza
+  - virtualbox-7.0
 
 snap_install:
   - slack
