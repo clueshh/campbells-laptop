@@ -5,7 +5,10 @@ An ansible playbook to setup my laptop (KDE).
 ## Getting Started
 
 ```bash
-make install-dev
+sudo make bootstrap
+source venv/bin/activate
+
+make install
 ```
 
 ## Usage
