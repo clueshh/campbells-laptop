@@ -91,6 +91,7 @@ apt_install:
   - fzf
   - eza
   - virtualbox-7.0
+  - stow
 
 snap_install:
   - slack
