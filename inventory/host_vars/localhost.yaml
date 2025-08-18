@@ -159,7 +159,6 @@ pyenv_global:
 nvm_version: 0.39.3
 nvm_node_version: lts
 nvm_install_path: ~/.nvm
-nvm_shell_init_file: ~/.zshrc
 nvm_install_deps: true
 
 git_username: "Campbell Whitworth"

@@ -124,7 +124,7 @@
     - name: Install nvm
       tags: nvm
       ansible.builtin.import_role:
-        name: stephdewit.nvm
+        name: nvm
 
     - name: Install pyenv
       tags: pyenv
@@ -135,6 +135,14 @@
       tags: golang
       ansible.builtin.import_role:
         name: gantsign.golang
+
+    - name: Ensure fonts directory exists
+      tags: fonts
+      ansible.builtin.file:
+        path: "{{ fonts_path | default('/usr/share/fonts/TTF') }}"
+        state: directory
+        mode: "0755"
+      become: true
 
     - name: Install Consolas ligaturized fonts for vscode
       tags: fonts

@@ -8,8 +8,6 @@ collections:
 roles:
   - name: staticdev.pyenv
     version: 2.10.2
-  - name: stephdewit.nvm
-    version: v3.4.5
   - name: deekayen.awscli2
     version: 1.1.0
   - name: gantsign.golang

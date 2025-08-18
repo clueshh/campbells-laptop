@@ -1,7 +1,6 @@
 ---
 exclude_paths:
   - .ansible
-  - roles/stephdewit.nvm
   - roles/staticdev.pyenv
   - roles/gantsign.golang
   - roles/deekayen.awscli2
