@@ -125,6 +125,7 @@
       tags: nvm
       ansible.builtin.import_role:
         name: stephdewit.nvm
+      become: true
 
     - name: Install pyenv
       tags: pyenv
