@@ -3,11 +3,14 @@ KONSAVE_PROFILE_NAME ?= default
 bootstrap:
 	ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N ""
 	apt install --yes python3-pip
+	python3 -m venv venv
 
-install-dev:
-	npm install -g prettier
-	./venv./bin/python pip install -r requirements.txt
+install:
+	pip install -r requirements.txt
 	ansible-galaxy install -r requirements.yml
+
+install-dev: install
+	npm install -g prettier
 
 ansible-playbook:
 	ansible-playbook playbooks/main.yaml -K
