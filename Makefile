@@ -1,9 +1,7 @@
 KONSAVE_PROFILE_NAME ?= default
 
-bootstrap:
-	ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N ""
+install-system-deps:
 	apt install --yes python3-pip
-	python3 -m venv venv
 
 install:
 	pip install -r requirements.txt

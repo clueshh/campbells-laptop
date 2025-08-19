@@ -50,3 +50,16 @@
         src: "files/konsave/conf.yaml"
         dest: "{{ ansible_env.HOME }}/.config/konsave/conf.yaml"
         mode: "0644"
+
+    - name: Clone Dotfiles repository
+      ansible.builtin.git:
+        repo: git@github.com:clueshh/dotfiles.git
+        dest: "{{ ansible_env.HOME }}/.dotfiles"
+        version: master
+
+    - name: Create symlinks for dotfiles
+      ansible.builtin.command:
+        cmd: make stow
+      changed_when: false
+      args:
+        chdir: "{{ ansible_env.HOME }}/.dotfiles"
