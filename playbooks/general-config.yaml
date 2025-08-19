@@ -37,20 +37,6 @@
         mode: "0440"
       become: true
 
-    - name: Make Konsave directory
-      tags: konsave
-      ansible.builtin.file:
-        path: "{{ ansible_env.HOME }}/.config/konsave"
-        state: directory
-        mode: "0755"
-
-    - name: Configure Konsave
-      tags: konsave
-      ansible.builtin.copy:
-        src: "files/konsave/conf.yaml"
-        dest: "{{ ansible_env.HOME }}/.config/konsave/conf.yaml"
-        mode: "0644"
-
     - name: Clone Dotfiles repository
       ansible.builtin.git:
         repo: git@github.com:clueshh/dotfiles.git
