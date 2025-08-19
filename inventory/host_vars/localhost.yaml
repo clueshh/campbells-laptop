@@ -108,35 +108,6 @@ snap_classic:
 manala_ohmyzsh_dir: "{{ ansible_env.HOME }}/.oh-my-zsh"
 manala_ohmyzsh:
   update: true
-manala_ohmyzsh_users:
-  - user: campbell
-    template: users/manala/.zshrc.j2
-    config:
-      plugins:
-        - git
-        - gitignore
-        - history
-        - history-substring-search
-        - command-not-found
-        - direnv
-        - helm
-        - kubectl
-        - nvm
-        - npm
-        - pip
-        # - pyenv
-        - sudo
-        - ubuntu
-        - web-search
-        - aws
-        - docker
-        - fzf-tab
-        - k9s
-        - terraform
-      DISABLE_AUTO_UPDATE: false
-
-# p10k things
-zsh_plugin: ohmyzsh
 
 # custom plugins
 zsh_plugins:
