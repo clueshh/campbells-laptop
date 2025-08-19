@@ -82,6 +82,7 @@
       changed_when: aws_path.rc != 0
       register: aws_path
       ignore_errors: true
+      no_log: true
 
     - name: Install aws cli
       tags: [software-install, awscli]
