@@ -1,7 +1,7 @@
 KONSAVE_PROFILE_NAME ?= default
 
 install-system-deps:
-	apt install --yes python3-pip
+	apt install --yes python3-pip python3-venv
 
 install:
 	pip install -r requirements.txt
