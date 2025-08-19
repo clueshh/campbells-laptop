@@ -83,6 +83,8 @@
         state: link
       become: true
       loop: "{{ find.files }}"
+      loop_control:
+        label: "{{ item.path | basename }}"
 
     - name: Check if aws binary is in PATH
       tags: [software-install, awscli]
