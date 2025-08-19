@@ -35,6 +35,14 @@
       loop: "{{ apt_repos }}"
       when: item is mapping
 
+    - name: Preseed to prevent Microsoft repo being added
+      # https://code.visualstudio.com/docs/setup/linux#_debian-and-ubuntu-based-distributions
+      ansible.builtin.debconf:
+        name: code
+        question: "code/add-microsoft-repo"
+        value: "false"
+        vtype: boolean
+
     - name: Apt install software
       tags: [software-install, apt]
       ansible.builtin.apt:
