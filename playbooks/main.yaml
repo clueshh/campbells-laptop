@@ -42,6 +42,7 @@
         question: "code/add-microsoft-repo"
         value: "false"
         vtype: boolean
+      become: true
 
     - name: Apt install software
       tags: [software-install, apt]
