@@ -44,6 +44,16 @@
         vtype: boolean
       become: true
 
+    - name: Ensure repo_reenable_on_distupgrade is set to false in google-chrome defaults
+      ansible.builtin.lineinfile:
+        path: /etc/default/google-chrome
+        regexp: "^repo_reenable_on_distupgrade="
+        line: 'repo_reenable_on_distupgrade="false"'
+        create: true
+        backrefs: false
+        mode: "0644"
+      become: true
+
     - name: Apt install software
       tags: [software-install, apt]
       ansible.builtin.apt:
