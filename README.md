@@ -9,6 +9,7 @@ An ansible playbook to setup my laptop (KDE).
 ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N ""
 
 git clone git@github.com:clueshh/campbells-laptop.git
+cd campbells-laptop
 
 sudo make install-system-deps
 python3 -m venv venv
