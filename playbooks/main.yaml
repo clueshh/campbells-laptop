@@ -45,6 +45,7 @@
       become: true
 
     - name: Ensure repo_reenable_on_distupgrade is set to false in google-chrome defaults
+      # https://stackoverflow.com/a/35850155
       ansible.builtin.lineinfile:
         path: /etc/default/google-chrome
         regexp: "^repo_reenable_on_distupgrade="
