@@ -126,6 +126,8 @@
         version: "{{ item.version | default('HEAD') }}"
       become: true
       loop: "{{ zsh_plugins }}"
+      loop_control:
+        label: "{{ item.repo }}"
 
     - name: Install Atuin
       tags: [zsh, atuin]
