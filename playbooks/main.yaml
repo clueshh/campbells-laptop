@@ -35,6 +35,26 @@
       loop: "{{ apt_repos }}"
       when: item is mapping
 
+    - name: Preseed to prevent Microsoft repo being added
+      # https://code.visualstudio.com/docs/setup/linux#_debian-and-ubuntu-based-distributions
+      ansible.builtin.debconf:
+        name: code
+        question: "code/add-microsoft-repo"
+        value: "false"
+        vtype: boolean
+      become: true
+
+    - name: Ensure repo_reenable_on_distupgrade is set to false in google-chrome defaults
+      # https://stackoverflow.com/a/35850155
+      ansible.builtin.lineinfile:
+        path: /etc/default/google-chrome
+        regexp: "^repo_reenable_on_distupgrade="
+        line: 'repo_reenable_on_distupgrade="false"'
+        create: true
+        backrefs: false
+        mode: "0644"
+      become: true
+
     - name: Apt install software
       tags: [software-install, apt]
       ansible.builtin.apt:
@@ -75,6 +95,8 @@
         state: link
       become: true
       loop: "{{ find.files }}"
+      loop_control:
+        label: "{{ item.path | basename }}"
 
     - name: Check if aws binary is in PATH
       tags: [software-install, awscli]
@@ -82,6 +104,7 @@
       changed_when: aws_path.rc != 0
       register: aws_path
       ignore_errors: true
+      no_log: true
 
     - name: Install aws cli
       tags: [software-install, awscli]
@@ -103,6 +126,8 @@
         version: "{{ item.version | default('HEAD') }}"
       become: true
       loop: "{{ zsh_plugins }}"
+      loop_control:
+        label: "{{ item.repo }}"
 
     - name: Install Atuin
       tags: [zsh, atuin]
@@ -124,7 +149,7 @@
     - name: Install nvm
       tags: nvm
       ansible.builtin.import_role:
-        name: stephdewit.nvm
+        name: nvm
 
     - name: Install pyenv
       tags: pyenv
@@ -135,6 +160,14 @@
       tags: golang
       ansible.builtin.import_role:
         name: gantsign.golang
+
+    - name: Ensure fonts directory exists
+      tags: fonts
+      ansible.builtin.file:
+        path: "{{ fonts_path | default('/usr/share/fonts/TTF') }}"
+        state: directory
+        mode: "0755"
+      become: true
 
     - name: Install Consolas ligaturized fonts for vscode
       tags: fonts

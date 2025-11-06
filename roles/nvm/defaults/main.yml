@@ -1,0 +1,24 @@
+---
+nvm_version: 0.39.7
+# nvm_version: 'master'
+# nvm_version: 'latest'
+# nvm_version: 'HEAD'
+
+nvm_node_version: 20.14.0
+# nvm_node_version: 'lts'
+# nvm_node_version: 'latest'
+
+# path config
+nvm_install_path: ~/.nvm
+
+# force rewrite nvm folder from remove git
+nvm_force_install: false
+
+# allow to skip dependencies installation (for non-root user)
+nvm_install_deps: true
+
+# allow to change git url for use proxy
+nvm_git_repository: https://github.com/creationix/nvm.git
+
+# disable git recursive clone
+nvm_git_recursive: false

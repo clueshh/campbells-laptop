@@ -2,6 +2,6 @@
 collections/ansible_collections
 roles/gantsign.golang
 roles/staticdev.pyenv
-roles/stephdewit.nvm
 roles/deekayen.awscli2
 roles/rolehippie.starship
+venv

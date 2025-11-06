@@ -58,48 +58,49 @@ apt_repos:
   - deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/virtualbox.gpg] https://download.virtualbox.org/virtualbox/debian noble contrib
 
 apt_install:
-  - terraform
-  - google-chrome-stable
-  - spotify-client
+  - 1password
+  - asciinema
+  - bat
+  - code
+  - containerd.io
+  - direnv
+  - docker-buildx-plugin
   - docker-ce
   - docker-ce-cli
-  - docker-buildx-plugin
   - docker-compose-plugin
-  - containerd.io
-  - 1password
-  - kubectl
+  - eza
+  - ffmpeg
+  - fzf
+  - google-chrome-stable
   - helm
-  - code
-  - tailscale
-  - latte-dock
+  - imagemagick
+  - jq
+  - kamoso
   - kdeconnect
-  - papirus-icon-theme
-  - zsh
+  - kubectl
+  - kwin-bismuth
+  - latte-dock
   - make
   - openssh-server
-  - jq
-  - sshuttle
-  - ffmpeg
-  - kwin-bismuth
-  - kamoso
+  - papirus-icon-theme
   - simplescreenrecorder
-  - imagemagick
-  - bat
-  - asciinema
+  - spotify-client
+  - sshuttle
+  - stow
+  - tailscale
+  - terraform
   - trivy
-  - direnv
-  - fzf
-  - eza
   - virtualbox-7.0
+  - zsh
 
 snap_install:
-  - slack
-  - filelight
-  - yq
-  - dbeaver-ce
-  - obsidian
   - asciinema-agg
+  - dbeaver-ce
+  - filelight
   - kdenlive
+  - obsidian
+  - slack
+  - yq
 
 snap_classic:
   - obsidian
@@ -107,35 +108,6 @@ snap_classic:
 manala_ohmyzsh_dir: "{{ ansible_env.HOME }}/.oh-my-zsh"
 manala_ohmyzsh:
   update: true
-manala_ohmyzsh_users:
-  - user: campbell
-    template: users/manala/.zshrc.j2
-    config:
-      plugins:
-        - git
-        - gitignore
-        - history
-        - history-substring-search
-        - command-not-found
-        - direnv
-        - helm
-        - kubectl
-        - nvm
-        - npm
-        - pip
-        # - pyenv
-        - sudo
-        - ubuntu
-        - web-search
-        - aws
-        - docker
-        - fzf-tab
-        - k9s
-        - terraform
-      DISABLE_AUTO_UPDATE: false
-
-# p10k things
-zsh_plugin: ohmyzsh
 
 # custom plugins
 zsh_plugins:
@@ -159,7 +131,6 @@ pyenv_global:
 nvm_version: 0.39.3
 nvm_node_version: lts
 nvm_install_path: ~/.nvm
-nvm_shell_init_file: ~/.zshrc
 nvm_install_deps: true
 
 git_username: "Campbell Whitworth"

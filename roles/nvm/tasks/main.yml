@@ -1,0 +1,17 @@
+---
+- name: Import Debian setup
+  ansible.builtin.import_tasks: setup-debian.yml
+  when: nvm_install_deps
+  tags: nvm
+
+- name: Import NVM install
+  ansible.builtin.import_tasks: install_nvm.yml
+  tags: nvm
+
+- name: Import Node.js install
+  ansible.builtin.import_tasks: install_nodejs.yml
+  tags: nvm
+
+- name: Import validation
+  ansible.builtin.import_tasks: validate.yml
+  tags: nvm
