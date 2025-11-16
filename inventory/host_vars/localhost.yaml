@@ -81,6 +81,7 @@ apt_install:
   - kwin-bismuth
   - latte-dock
   - make
+  - mpv
   - openssh-server
   - papirus-icon-theme
   - simplescreenrecorder
