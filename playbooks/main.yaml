@@ -150,6 +150,18 @@
       loop_control:
         label: "{{ item.repo }}"
 
+    # The manala role installs oh-my-zsh as root; hand it back to the user so
+    # $HOME/.oh-my-zsh (and custom/completions) is writable without sudo.
+    - name: Own oh-my-zsh as the current user
+      tags: [zsh, ohmyzsh]
+      ansible.builtin.file:
+        path: "{{ manala_ohmyzsh_dir }}"
+        state: directory
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_id }}"
+        recurse: true
+      become: true
+
     - name: Install Atuin
       tags: [zsh, atuin]
       ansible.builtin.unarchive:
