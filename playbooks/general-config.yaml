@@ -49,3 +49,14 @@
       changed_when: false
       args:
         chdir: "{{ ansible_env.HOME }}/.dotfiles"
+
+    - name: Load GNOME dconf settings
+      tags: [gnome, dconf]
+      ansible.builtin.shell:
+        cmd: "dconf load /org/gnome/{{ item }}/ < {{ playbook_dir }}/files/gnome/{{ item }}.ini"
+      changed_when: false
+      loop:
+        - desktop
+        - shell
+        - mutter
+        - settings-daemon

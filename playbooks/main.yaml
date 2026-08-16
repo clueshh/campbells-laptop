@@ -70,6 +70,27 @@
         deb: "https://github.com/derailed/k9s/releases/download/{{ k9s_version }}/k9s_linux_amd64.deb"
       become: true
 
+    - name: Install session-manager-plugin
+      tags: [software-install, session-manager-plugin]
+      ansible.builtin.apt:
+        state: present
+        deb: "{{ session_manager_plugin_deb }}"
+      become: true
+
+    - name: Install keybase
+      tags: [software-install, keybase]
+      ansible.builtin.apt:
+        state: present
+        deb: "{{ keybase_deb }}"
+      become: true
+
+    - name: Install mongodb-compass
+      tags: [software-install, mongodb-compass]
+      ansible.builtin.apt:
+        state: present
+        deb: "https://downloads.mongodb.com/compass/mongodb-compass_{{ mongodb_compass_version }}_amd64.deb"
+      become: true
+
     - name: Snap install software
       tags: [software-install, snap]
       community.general.snap:
@@ -139,6 +160,81 @@
         include: [atuin-x86_64-unknown-linux-gnu/atuin]
         extra_opts: ["--strip-components=1", "--show-stored-names"]
       become: true
+
+    - name: Install single-binary release tools
+      tags: [software-install, release-binaries]
+      ansible.builtin.get_url:
+        url: "{{ item.url }}"
+        dest: "/usr/local/bin/{{ item.name }}"
+        mode: "0755"
+      become: true
+      loop: "{{ release_binaries | selectattr('archive', 'equalto', 'none') | list }}"
+      loop_control:
+        label: "{{ item.name }}"
+
+    - name: Install archived release tools
+      tags: [software-install, release-binaries]
+      ansible.builtin.unarchive:
+        src: "{{ item.url }}"
+        dest: /usr/local/bin
+        remote_src: true
+        mode: "0755"
+        include: ["{{ item.include }}"]
+      become: true
+      loop: "{{ release_binaries | selectattr('archive', 'in', ['tar', 'zip']) | list }}"
+      loop_control:
+        label: "{{ item.name }}"
+
+    - name: Install gifski
+      tags: [software-install, gifski]
+      ansible.builtin.unarchive:
+        src: "https://github.com/ImageOptim/gifski/releases/download/{{ gifski_version }}/gifski-{{ gifski_version }}.tar.xz"
+        dest: "{{ ansible_env.HOME }}/.local/bin"
+        remote_src: true
+        mode: "0755"
+        include: [linux/gifski]
+        extra_opts: ["--strip-components=1"]
+
+    - name: Install rustup and the stable toolchain # noqa: command-instead-of-module
+      tags: [software-install, rustup]
+      ansible.builtin.shell:
+        cmd: >-
+          set -o pipefail;
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs
+          | sh -s -- -y --no-modify-path
+        executable: /bin/bash
+        creates: "{{ ansible_env.HOME }}/.cargo/bin/rustup"
+
+    - name: Install uv # noqa: command-instead-of-module
+      tags: [software-install, uv]
+      ansible.builtin.shell:
+        cmd: set -o pipefail; curl -LsSf https://astral.sh/uv/install.sh | sh
+        executable: /bin/bash
+        creates: "{{ ansible_env.HOME }}/.local/bin/uv"
+      environment:
+        UV_NO_MODIFY_PATH: "1"
+
+    - name: Install GitHub Copilot CLI
+      tags: [software-install, copilot]
+      community.general.npm:
+        name: "@github/copilot"
+        global: true
+        state: present
+
+    - name: Install krew # noqa: command-instead-of-module
+      tags: [software-install, krew]
+      ansible.builtin.shell:
+        cmd: >-
+          set -o pipefail;
+          tmp="$(mktemp -d)" && cd "$tmp" &&
+          curl -fsSLo krew.tar.gz
+          "https://github.com/kubernetes-sigs/krew/releases/download/{{ krew_version }}/krew-linux_amd64.tar.gz" &&
+          tar zxvf krew.tar.gz && ./krew-linux_amd64 install krew &&
+          rm -rf "$tmp"
+        executable: /bin/bash
+        creates: "{{ ansible_env.HOME }}/.krew/bin/kubectl-krew"
+      environment:
+        KREW_ROOT: "{{ ansible_env.HOME }}/.krew"
 
     - name: Install starship
       tags: [zsh, starship]

@@ -50,3 +50,17 @@ konsave-export:
 
 konsave-import:
 	konsave --import-profile ./konsave/$(KONSAVE_PROFILE_NAME).knsv
+
+GNOME_SUBTREES = desktop shell mutter settings-daemon
+
+gnome-save:
+	@for sub in $(GNOME_SUBTREES); do \
+		dconf dump /org/gnome/$$sub/ > playbooks/files/gnome/$$sub.ini; \
+		echo "saved $$sub"; \
+	done
+
+gnome-load:
+	@for sub in $(GNOME_SUBTREES); do \
+		dconf load /org/gnome/$$sub/ < playbooks/files/gnome/$$sub.ini; \
+		echo "loaded $$sub"; \
+	done
