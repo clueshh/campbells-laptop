@@ -1,0 +1,38 @@
+---
+# Fresh cloud images run cloud-init, apt-daily and unattended-upgrades on first
+# boot, which hold the apt/dpkg locks and race the converge (causing transient
+# "pkgProblemResolver::Resolve generated breaks" failures). Settle cloud-init
+# and disable the background apt timers so the converge has exclusive apt
+# access and the run is deterministic.
+- name: Prepare
+  hosts: all
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Wait for cloud-init to finish
+      ansible.builtin.command: cloud-init status --wait
+      changed_when: false
+      failed_when: false
+
+    - name: Stop and mask background apt services and timers
+      ansible.builtin.systemd_service:
+        name: "{{ item }}"
+        state: stopped
+        enabled: false
+        masked: true
+      failed_when: false
+      loop:
+        - apt-daily.timer
+        - apt-daily.service
+        - apt-daily-upgrade.timer
+        - apt-daily-upgrade.service
+        - unattended-upgrades.service
+
+    - name: Wait for the apt lock to be released
+      ansible.builtin.command: fuser /var/lib/dpkg/lock-frontend
+      register: apt_lock
+      changed_when: false
+      failed_when: false
+      retries: 30
+      delay: 5
+      until: apt_lock.rc != 0

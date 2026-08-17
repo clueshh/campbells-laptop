@@ -1,0 +1,294 @@
+---
+# Third-party apt repositories in deb822 format. Each entry manages both the
+# .sources file and its signing key (fetched from signed_by and stored, with the
+# correct armored/binary extension, under /etc/apt/keyrings scoped via Signed-By).
+apt_repositories:
+  - name: google-chrome
+    uris: http://dl.google.com/linux/chrome/deb/
+    suites: stable
+    components: main
+    architectures: amd64
+    signed_by: https://dl.google.com/linux/linux_signing_key.pub
+
+  - name: hashicorp
+    uris: https://apt.releases.hashicorp.com
+    suites: noble
+    components: main
+    architectures: amd64
+    signed_by: https://apt.releases.hashicorp.com/gpg
+
+  - name: spotify
+    uris: https://repository.spotify.com
+    suites: stable
+    components: non-free
+    architectures: amd64
+    signed_by: https://download.spotify.com/debian/pubkey_5384CE82BA52C83A.asc
+
+  - name: docker
+    uris: https://download.docker.com/linux/ubuntu
+    suites: noble
+    components: stable
+    architectures: amd64
+    signed_by: https://download.docker.com/linux/ubuntu/gpg
+
+  - name: kubernetes
+    uris: https://pkgs.k8s.io/core:/stable:/v1.29/deb/
+    suites: "/"
+    architectures: amd64
+    signed_by: https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key
+
+  - name: helm
+    uris: https://packages.buildkite.com/helm-linux/helm-debian/any/
+    suites: any
+    components: main
+    architectures: amd64
+    signed_by: https://packages.buildkite.com/helm-linux/helm-debian/gpgkey
+
+  - name: 1password
+    uris: https://downloads.1password.com/linux/debian/amd64
+    suites: stable
+    components: main
+    architectures: amd64
+    signed_by: https://downloads.1password.com/linux/keys/1password.asc
+
+  - name: vscode
+    uris: https://packages.microsoft.com/repos/code
+    suites: stable
+    components: main
+    architectures: amd64
+    signed_by: https://packages.microsoft.com/keys/microsoft.asc
+
+  - name: tailscale
+    uris: https://pkgs.tailscale.com/stable/ubuntu
+    suites: noble
+    components: main
+    architectures: amd64
+    signed_by: https://pkgs.tailscale.com/stable/ubuntu/jammy.noarmor.gpg
+
+  - name: papirus
+    uris: http://ppa.launchpad.net/papirus/papirus/ubuntu
+    suites: noble
+    components: main
+    architectures: amd64
+    signed_by: |
+      -----BEGIN PGP PUBLIC KEY BLOCK-----
+
+      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
+      ov7LY/oa8RYB23ur
+      =WQjz
+      -----END PGP PUBLIC KEY BLOCK-----
+
+  - name: trivy
+    uris: https://aquasecurity.github.io/trivy-repo/deb
+    suites: generic
+    components: main
+    architectures: amd64
+    signed_by: https://aquasecurity.github.io/trivy-repo/deb/public.key
+
+  - name: gierens
+    uris: http://deb.gierens.de
+    suites: stable
+    components: main
+    architectures: amd64
+    signed_by: https://raw.githubusercontent.com/eza-community/eza/main/deb.asc
+
+  - name: virtualbox
+    uris: https://download.virtualbox.org/virtualbox/debian
+    suites: noble
+    components: contrib
+    architectures: amd64
+    signed_by: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+
+  - name: wezterm
+    uris: https://apt.fury.io/wez/
+    suites: "*"
+    components: "*"
+    signed_by: https://apt.fury.io/wez/gpg.key
+
+  - name: task
+    uris: https://dl.cloudsmith.io/public/task/task/deb/ubuntu
+    suites: noble
+    components: main
+    signed_by: https://dl.cloudsmith.io/public/task/task/gpg.key
+
+  - name: qsv
+    uris: https://dathere.github.io/qsv-deb-releases
+    suites: "./"
+    signed_by: https://dathere.github.io/qsv-deb-releases/qsv-deb.gpg
+
+  - name: githubcli
+    uris: https://cli.github.com/packages
+    suites: stable
+    components: main
+    architectures: amd64
+    signed_by: https://cli.github.com/packages/githubcli-archive-keyring.gpg
+
+apt_install:
+  - 1password
+  - 1password-cli
+  - asciinema
+  - bat
+  - code
+  - containerd.io
+  - direnv
+  - docker-buildx-plugin
+  - docker-ce
+  - docker-ce-cli
+  - docker-compose-plugin
+  - eza
+  - ffmpeg
+  - fzf
+  - gh
+  - gnome-shell-extension-manager
+  - gnome-tweaks
+  - google-chrome-stable
+  - helm
+  - imagemagick
+  - jq
+  - kamoso
+  - kdeconnect
+  - kubectl
+  - kwin-bismuth
+  - latte-dock
+  - make
+  - mpv
+  - nmap
+  - openssh-server
+  - papirus-icon-theme
+  - qsv
+  - ripgrep
+  - simplescreenrecorder
+  - shellcheck
+  - spotify-client
+  - sshuttle
+  - stow
+  - tailscale
+  - task
+  - terraform
+  - tree
+  - trivy
+  - vagrant
+  - vault
+  - vim
+  - virtualbox-7.0
+  - vlc
+  - wezterm
+  - zsh
+
+snap_install:
+  - asciinema-agg
+  - dbeaver-ce
+  - filelight
+  - kdenlive
+  - obsidian
+  - slack
+  - yq
+
+snap_classic:
+  - dbeaver-ce
+  - obsidian
+
+manala_ohmyzsh_dir: "{{ ansible_env.HOME }}/.oh-my-zsh"
+manala_ohmyzsh:
+  update: true
+
+# custom plugins
+zsh_plugins:
+  - repo: https://github.com/Aloxaf/fzf-tab
+    dest: "{{ manala_ohmyzsh_dir }}/custom/plugins/fzf-tab"
+    version: v1.2.0
+
+pyenv_version: HEAD
+pyenv_virtualenv_version: HEAD
+pyenv_update_version: HEAD
+pyenv_update: true
+pyenv_path: "{{ ansible_env.HOME }}/.pyenv"
+pyenv_shellrc_file: ~/.zshrc
+pyenv_python_versions:
+  - 3.11.4
+  - 3.12.10
+  - 3.13.3
+pyenv_global:
+  - 3.13.3
+
+nvm_version: 0.39.3
+nvm_node_version: lts
+nvm_install_path: "{{ ansible_env.HOME }}/.nvm"
+nvm_install_deps: true
+
+# storage.googleapis.com/golang is deprecated and now returns 403; use the
+# canonical Google mirror instead.
+golang_mirror: https://dl.google.com/go
+
+git_username: "Campbell Whitworth"
+git_email: "campbell.whitworth@fingermarkglobal.com"
+
+k9s_version: v0.50.9
+
+atuin_version: v18.8.0
+
+# .deb packages installed directly from vendor URLs
+session_manager_plugin_deb: https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb
+keybase_deb: https://prerelease.keybase.io/keybase_amd64.deb
+mongodb_compass_version: 1.48.2
+
+# Single-binary tools pulled from GitHub releases into /usr/local/bin
+release_binaries:
+  - name: flux
+    url: https://github.com/fluxcd/flux2/releases/download/v2.7.5/flux_2.7.5_linux_amd64.tar.gz
+    archive: tar
+    include: flux
+  - name: kind
+    url: https://kind.sigs.k8s.io/dl/v0.31.0/kind-linux-amd64
+    archive: none
+  - name: tflint
+    url: https://github.com/terraform-linters/tflint/releases/download/v0.61.0/tflint_linux_amd64.zip
+    archive: zip
+    include: tflint
+  - name: grype
+    url: https://github.com/anchore/grype/releases/download/v0.114.0/grype_0.114.0_linux_amd64.tar.gz
+    archive: tar
+    include: grype
+  - name: agg
+    url: https://github.com/asciinema/agg/releases/download/v1.7.0/agg-x86_64-unknown-linux-gnu
+    archive: none
+  - name: shfmt
+    url: https://github.com/mvdan/sh/releases/download/v3.12.0/shfmt_v3.12.0_linux_amd64
+    archive: none
+
+gifski_version: "1.34.0"
+krew_version: v0.5.0

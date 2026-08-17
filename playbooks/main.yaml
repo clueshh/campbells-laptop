@@ -1,39 +1,34 @@
 ---
 - name: Install local laptop requirements
-  hosts: localhost
+  hosts: all
   tags: [install]
   tasks:
     - name: Always gather facts (incase run with tags)
       ansible.builtin.setup:
       tags: always
 
-    - name: Add apt keys
-      tags: apt-repo-key
-      ansible.builtin.apt_key:
-        url: "{{ item.url }}"
-        keyring: "{{ item.keyring }}"
+    - name: Add apt repositories
+      tags: [apt-repo-key, apt-repo]
+      ansible.builtin.deb822_repository:
+        name: "{{ item.name }}"
+        types: deb
+        uris: "{{ item.uris }}"
+        suites: "{{ item.suites }}"
+        components: "{{ item.components | default(omit) }}"
+        architectures: "{{ item.architectures | default(omit) }}"
+        signed_by: "{{ item.signed_by }}"
         state: present
       become: true
-      loop: "{{ apt_keys }}"
+      loop: "{{ apt_repositories }}"
+      loop_control:
+        label: "{{ item.name }}"
 
-    - name: Add apt repos
-      tags: apt-repo
-      ansible.builtin.apt_repository:
-        repo: "{{ item }}"
-        state: present
+    - name: Update apt cache
+      tags: [apt-repo-key, apt-repo, apt]
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
       become: true
-      loop: "{{ apt_repos }}"
-      when: item is string
-
-    - name: Add apt repos (with filename)
-      tags: apt-repo
-      ansible.builtin.apt_repository:
-        repo: "{{ item.repo }}"
-        filename: "{{ item.filename }}"
-        state: present
-      become: true
-      loop: "{{ apt_repos }}"
-      when: item is mapping
 
     - name: Preseed to prevent Microsoft repo being added
       # https://code.visualstudio.com/docs/setup/linux#_debian-and-ubuntu-based-distributions
@@ -59,9 +54,8 @@
       tags: [software-install, apt]
       ansible.builtin.apt:
         state: present
-        name: "{{ item }}"
+        name: "{{ apt_install }}"
       become: true
-      loop: "{{ apt_install }}"
 
     - name: Apt install k9s
       tags: [software-install, apt, k9s]
@@ -197,6 +191,13 @@
       loop_control:
         label: "{{ item.name }}"
 
+    - name: Ensure ~/.local/bin exists
+      tags: [software-install, gifski]
+      ansible.builtin.file:
+        path: "{{ ansible_env.HOME }}/.local/bin"
+        state: directory
+        mode: "0755"
+
     - name: Install gifski
       tags: [software-install, gifski]
       ansible.builtin.unarchive:
@@ -226,12 +227,27 @@
       environment:
         UV_NO_MODIFY_PATH: "1"
 
+    - name: Install nvm
+      tags: [nvm, copilot]
+      ansible.builtin.import_role:
+        name: nvm
+
+    - name: Resolve the nvm-managed node bin directory
+      tags: [software-install, copilot]
+      ansible.builtin.command:
+        cmd: bash -c 'source "{{ nvm_install_path }}/nvm.sh" && dirname "$(nvm which default)"'
+      register: nvm_node_bin
+      changed_when: false
+
     - name: Install GitHub Copilot CLI
       tags: [software-install, copilot]
       community.general.npm:
         name: "@github/copilot"
         global: true
         state: present
+        executable: "{{ nvm_node_bin.stdout }}/npm"
+      environment:
+        PATH: "{{ nvm_node_bin.stdout }}:{{ ansible_env.PATH }}"
 
     - name: Install krew # noqa: command-instead-of-module
       tags: [software-install, krew]
@@ -253,11 +269,6 @@
       ansible.builtin.import_role:
         name: rolehippie.starship
       become: true
-
-    - name: Install nvm
-      tags: nvm
-      ansible.builtin.import_role:
-        name: nvm
 
     - name: Install pyenv
       tags: pyenv
@@ -303,7 +314,7 @@
   ansible.builtin.import_playbook: general-config.yaml
 
 - name: System update
-  hosts: localhost
+  hosts: all
   tags: software-update-all
   tasks:
     - name: Apt update all packages
