@@ -1,0 +1,5 @@
+# e2e test tooling (Molecule + vagrant/libvirt driver).
+# Install on top of requirements.txt: `make install-test`.
+molecule~=26.8.0
+molecule-plugins[vagrant]~=26.7.0
+python-vagrant~=1.0.0

@@ -10,6 +10,32 @@ install:
 install-dev: install
 	npm install -g prettier
 
+install-test: install
+	pip install -r requirements-test.txt
+
+# The vagrant driver ships its `vagrant` module in the molecule-plugins package;
+# recent molecule no longer adds it to ANSIBLE_LIBRARY automatically, so wire it
+# up for the test targets.
+VAGRANT_MODULES_DIR = $(shell python -c 'import molecule_plugins.vagrant as m, os; print(os.path.join(os.path.dirname(m.__file__), "modules"))' 2>/dev/null)
+test test-converge test-verify test-login test-destroy: export ANSIBLE_LIBRARY = $(VAGRANT_MODULES_DIR)
+
+# Full e2e: clean Ubuntu 24.04 VM, converge, then assert idempotence and verify.
+test:
+	molecule test
+
+test-converge:
+	molecule converge
+
+test-verify:
+	molecule verify
+
+test-login:
+	molecule login
+
+test-destroy:
+	molecule destroy
+
+
 ansible-playbook:
 	ansible-playbook playbooks/main.yaml -K
 

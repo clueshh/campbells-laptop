@@ -1,6 +1,6 @@
 ---
 - name: General configuration
-  hosts: localhost
+  hosts: all
   tasks:
     - name: Ensure ~/.local/bin exists
       tags: user

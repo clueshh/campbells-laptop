@@ -1,0 +1,58 @@
+---
+# Full e2e: boot a clean Ubuntu 24.04 VM and converge the playbook against it.
+# libvirt/KVM is used as the provider.
+dependency:
+  name: galaxy
+  options:
+    requirements-file: requirements.yml
+
+driver:
+  name: vagrant
+  provider:
+    name: libvirt
+
+platforms:
+  - name: campbells-laptop-e2e
+    box: cloud-image/ubuntu-24.04
+    memory: 4096
+    cpus: 2
+    provider_options:
+      machine_virtual_size: 40
+
+provisioner:
+  name: ansible
+  env:
+    ANSIBLE_ROLES_PATH: ${MOLECULE_PROJECT_DIRECTORY}/roles
+    ANSIBLE_COLLECTIONS_PATH: ${MOLECULE_PROJECT_DIRECTORY}/collections
+  config_options:
+    defaults:
+      stdout_callback: yaml
+  # general-config clones a private SSH repo and applies desktop dconf, so it
+  # cannot run in a clean headless VM. It is skipped for the e2e run.
+  options:
+    skip-tags: general-config
+  inventory:
+    links:
+      group_vars: ../../inventory/group_vars
+
+verifier:
+  name: ansible
+
+# The idempotence step is intentionally omitted. Three tasks in galaxy-installed
+# roles report changed on every run and cannot be fixed without patching the
+# upstream roles (which are dependencies, not repo code):
+#   - manala.roles.ohmyzsh "Install > Directory" forces ~/.oh-my-zsh to
+#     root:root, which the playbook's "Own oh-my-zsh as the current user" task
+#     then chowns back to the user - so both flap each run.
+#   - staticdev.pyenv "Update Pyenv interpreter list" runs `pyenv update` with a
+#     hardcoded `changed_when: rc == 0`, so it always reports changed.
+scenario:
+  test_sequence:
+    - dependency
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - verify
+    - destroy
